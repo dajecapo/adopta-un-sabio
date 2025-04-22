@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adopta un Sabio</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f2f8;
+      color: #333;
+    }
+    header {
+      background: url('https://raw.githubusercontent.com/dajecapo/adoptaunsabio/main/adopta-un-sabio.jpg') center center no-repeat;
+      background-size: cover;
+      background-color: #fff;
+      height: 600px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+    }
+    header h1 {
+      font-size: 2.8rem;
+    }
+    header p {
+      font-size: 1.2rem;
+      margin-top: 10px;
+    }
+    section {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 1rem;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .sabio-card img,
+    #preview {
+      width: 100px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    input, textarea, button {
+      padding: 0.7rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+    button {
+      background: #6a1b9a;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #4a148c;
+    }
+    footer {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #888;
+      padding: 2rem 1rem;
+    }
+    @media screen and (max-width: 768px) {
+      header {
+        height: 400px;
+        padding: 1rem;
+      }
+      header h1 {
+        font-size: 2rem;
+      }
+      header p {
+        font-size: 1rem;
+      }
+      section {
+        margin: 1rem;
+        padding: 1rem;
+      }
+      form {
+        gap: 0.5rem;
+      }
+      input, textarea, button {
+        font-size: 1rem;
+        padding: 0.5rem;
+      }
+      .sabio-card {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .sabio-card img {
+        width: 80px;
+        height: 100px;
+      }
+      iframe {
+        height: 200px !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Adopta un Sabio</h1>
+    <p>Escucha, aprende, comparte.</p>
+  </header>
+
+  <section style="margin-top: -80px; position: relative; z-index: 2;">
+    <h2>¿Qué es Adopta un Sabio?</h2>
+    <p>En un mundo que a veces corre demasiado rápido, Adopta un Sabio surge como un alto en el camino.</p>
+    <p>Es un espacio digital donde la voz pausada, firme y sabia de quienes ya vivieron encuentra eco en las generaciones que hoy están construyendo su futuro.</p>
+    <p>Aquí, los adultos mayores no son vistos como el final de una historia, sino como el inicio de una conversación que puede cambiar vidas.</p>
+    <p>En este sitio, cualquier joven puede acercarse, preguntar, aprender y descubrir que detrás de cada sabio hay una historia, un error superado, una lección aprendida, una idea que puede guiar.</p>
+    <p><strong>Adopta un Sabio</strong> no es solo una plataforma: es un movimiento que busca rescatar la experiencia humana, dignificarla, compartirla y hacerla útil nuevamente.</p>
+    <p style="font-weight: bold; font-style: italic; font-size: 1.2rem; color: #6a1b9a;">Porque la sabiduría no se jubila, se comparte.</p>
+  </section>
+
+  <section>
+  <h2>¿Cómo funciona?</h2>
+  <button onclick="mostrarFuncionamiento()">¡Descúbrelo!</button>
+  <div id="funciona-box" style="display:none; margin-top: 1rem;">
+    <ul>
+      <li>Explora las áreas de conocimiento disponibles más abajo.</li>
+      <li>Elige al sabio (mentor) que creas puede ayudarte.</li>
+      <li>Escribe tu inquietud (máximo 150 palabras) con claridad y respeto.</li>
+      <li>Recibirás respuesta en un plazo máximo de 48 horas.</li>
+      <li>Si necesitas más orientación, pregunta a tu mentor si es posible continuar la charla.</li>
+      <li>Al final, deja un breve testimonio sobre tu experiencia.</li>
+    </ul>
+    <p><em>Preguntar con humildad también es un acto de sabiduría.</em></p>
+  </div>
+</section>
+
+<script>
+  function mostrarFuncionamiento() {
+    const box = document.getElementById('funciona-box');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+<section>
+  <h2>Reglas de participación</h2>
+  <button onclick="mostrarReglas()">¡Conócelas!</button>
+  <div id="reglas-box" style="display:none; margin-top: 1rem;">
+    <table style="width:100%; border-collapse: collapse;">
+      <thead>
+        <tr style="background-color: #eee;">
+          <th style="padding: 0.5rem; border: 1px solid #ccc;">Para los usuarios</th>
+          <th style="padding: 0.5rem; border: 1px solid #ccc;">Para los mentores</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Condúcete con respeto</td>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Sé empático, amable y actúa con seriedad</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Sé claro y conciso en tu pregunta</td>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Responde en un máximo de 48 horas</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Acuerda con tu mentor horarios y tiempos de atención</td>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Acuerda con el usuario el horario de atención</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Deja tu experiencia en el sitio</td>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Reporta cómo se cumplió la mentoría y en qué plazo</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Evita usar este espacio con fines personales o comerciales</td>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Evita emitir juicios discriminatorios o dar consejos médicos/legales sin advertencia</td>
+        </tr>
+        <tr>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">No insistas si no recibes respuesta inmediata</td>
+          <td style="padding: 0.5rem; border: 1px solid #ccc;">Informa si no podrás responder temporalmente</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 1rem; font-style: italic; color: #6a1b9a;">
+      Este es un espacio que busca seriedad y respeto. Quien incumpla las reglas podrá ser retirado. Este es un espacio basado en el respeto y la confianza mutua. Si detectas alguna conducta inapropiada, repórtala al equipo administrador para su revisión.
+    </p>
+  </div>
+</section>
+
+<script>
+  function mostrarReglas() {
+    const reglas = document.getElementById('reglas-box');
+    reglas.style.display = reglas.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+<section>
+  <h2>Galería de Sabios</h2>
+  <div class='sabio-card' style='display: flex; align-items: center; gap: 1rem; border-bottom: 1px solid #eee; padding: 1rem 0;'>
+    <img src='https://via.placeholder.com/100' alt='Sabio ejemplo'>
+    <div>
+      <h4>Daniel</h4>
+      <p>Área: Gestión de crisis públicas y comunicación</p>
+      <button onclick="document.getElementById('formulario-sabio').style.display = 'block'">¡Haz tu consulta aquí!</button>
+    </div>
+  </div>
+
+  <div id='formulario-sabio' style='display:none; margin-top: 1rem; padding: 1rem; border: 1px solid #ccc; border-radius: 10px;'>
+    <p>¡Hola! Estás contactando con <strong>Don Daniel</strong>, quien hoy es jubilado, pero dio clases y asesoró en comunicación de crisis durante más de 30 años. Llena el siguiente formulario y contacta con él.</p>
+    <p><strong>Privacidad y Aviso Legal:</strong> Los datos recabados no serán compartidos con terceros. Los sabios ofrecen orientación basada en su experiencia, no sustituyen asesoría profesional formal. Si detectas una conducta inapropiada, repórtala al equipo de administración.</p>
+<form>
+      <input type='text' placeholder='Tu nombre' required>
+      <input type='tel' placeholder='Tu teléfono (10 dígitos)' required>
+      <input type='email' placeholder='Tu correo electrónico' required>
+      <textarea placeholder='Tu pregunta (máx. 100 palabras)' rows='4' maxlength='600' required></textarea>
+      <label><input type='checkbox'> No soy un robot</label>
+      <button type='submit'>Enviar</button>
+    </form>
+  </div>
+</section>
+
+<section>
+  <h2>Testimonios de usuarios</h2>
+  <p>“Mi sabio me ayudó a ver mis errores con otra perspectiva. Fue como hablar con alguien que ya caminó ese camino.” – Ana</p>
+  <p>“Gracias a Don Daniel entendí cómo actuar en una crisis sin entrar en pánico.” – Jorge</p>
+  <p>“La experiencia fue más cálida y humana de lo que imaginé. Siento que aprendí algo valioso.” – Luis</p>
+</section>
+
+<section>
+  <h2>Súmate a este proyecto</h2>
+  <button onclick="mostrarFormularioSabio()">Llena este formulario</button>
+  <div id="formulario-nuevo-sabio" style="display:none; margin-top: 1rem; padding: 1rem; border: 1px solid #ccc; border-radius: 10px;">
+    <p><strong>Privacidad y Aviso Legal:</strong> Los datos recabados no serán compartidos con terceros. Los sabios ofrecen orientación basada en su experiencia, no sustituyen asesoría profesional formal. Si detectas una conducta inapropiada, repórtala al equipo de administración.</p>
+<form>
+      <input type="text" placeholder="Nombre completo" required>
+      <input type="text" placeholder="Área de conocimiento" required>
+      <input type="number" placeholder="Experiencia (años)" required>
+      <input type="number" placeholder="Edad" required>
+      <input type="email" placeholder="Correo electrónico" required>
+      <input type="tel" placeholder="Teléfono (10 dígitos)" required>
+      <textarea placeholder="Minibiografía (máx. 50 palabras)" maxlength="300" rows="4" required></textarea>
+      <label for="foto">Subir foto (tamaño infantil):</label>
+      <input type="file" id="foto" accept="image/*" style="border:none">
+      <img id="preview" src="#" alt="Vista previa" style="display:none; width: 100px; height: 120px; border-radius: 50%; object-fit: cover;">
+      <button type="submit">Enviar para revisión</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  function mostrarFormularioSabio() {
+    const form = document.getElementById('formulario-nuevo-sabio');
+    form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  }
+  document.getElementById('foto')?.addEventListener('change', function(event) {
+    const reader = new FileReader();
+    reader.onload = function(){
+      const img = document.getElementById('preview');
+      img.src = reader.result;
+      img.style.display = 'block';
+    }
+    reader.readAsDataURL(event.target.files[0]);
+  });
+</script>
+
+<section>
+  <h2>Casos destacados</h2>
+  <div id="mentor-del-mes" style="text-align: center; margin-top: 1rem;">
+    <h3 id="mentor-nombre">Mentor del mes: Doña Elvia</h3>
+    <p id="mentor-descripcion">Orientadora vocacional con más de 40 años de experiencia. Ayudó a más de 30 jóvenes a elegir su carrera con sabiduría y corazón.</p>
+    <img id="mentor-foto" src="https://via.placeholder.com/150" alt="Foto del Mentor" style="width: 150px; height: 180px; border-radius: 10px; object-fit: cover;">
+  </div>
+
+  <div style="margin-top: 2rem; padding: 1rem; background: #f9f9f9; border-radius: 8px;">
+    <h4>Panel privado para actualizar mentor del mes</h4>
+    <form onsubmit="actualizarMentor(event)">
+      <input type="text" id="nuevo-nombre" placeholder="Nombre del mentor" required><br><br>
+      <textarea id="nueva-descripcion" rows="3" placeholder="Descripción breve" required></textarea><br><br>
+      <input type="url" id="nueva-foto" placeholder="URL de la nueva imagen" required><br><br>
+      <button type="submit">Actualizar mentor del mes</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  function actualizarMentor(e) {
+    e.preventDefault();
+    document.getElementById('mentor-nombre').textContent = 'Mentor del mes: ' + document.getElementById('nuevo-nombre').value;
+    document.getElementById('mentor-descripcion').textContent = document.getElementById('nueva-descripcion').value;
+    document.getElementById('mentor-foto').src = document.getElementById('nueva-foto').value;
+  }
+</script>
+
+<script>
+  function mostrarDestacados() {
+    const box = document.getElementById('destacados-box');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+<section>
+  <h2>Preguntas frecuentes (FAQ)</h2>
+  <button onclick="mostrarFAQ()">Resuelve tus dudas</button>
+  <div id="faq-box" style="display:none; margin-top: 1rem;">
+    <ul>
+      <li><strong>¿Tiene algún costo?</strong> No. Todo el acompañamiento es gratuito y voluntario.</li>
+      <li><strong>¿Qué tipo de preguntas puedo hacer?</strong> Personales, profesionales, familiares... todo lo que no requiera consulta médica o legal formal.</li>
+      <li><strong>¿Quién puede ser sabio?</strong> Cualquier persona mayor de 50 años con experiencia y voluntad de ayudar.</li>
+      <li><strong>¿Debo revelar mi número o datos personales?</strong> Solo si así lo deseas. La comunicación inicial es vía formulario.</li>
+    </ul>
+  </div>
+</section>
+
+<script>
+  function mostrarFAQ() {
+    const box = document.getElementById('faq-box');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+<section>
+  <h2>Contacto y sugerencias</h2>
+  <button onclick="mostrarContacto()">Quiero aportar una idea</button>
+  <div id="contacto-box" style="display:none; margin-top: 1rem;">
+    <p><strong>Privacidad y Aviso Legal:</strong> Los datos recabados no serán compartidos con terceros. Los sabios ofrecen orientación basada en su experiencia, no sustituyen asesoría profesional formal. Si detectas una conducta inapropiada, repórtala al equipo de administración.</p>
+<form>
+      <input type="text" placeholder="Tu nombre" required>
+      <input type="email" placeholder="Tu correo electrónico" required>
+      <textarea placeholder="Tu mensaje o propuesta" rows="4" required></textarea>
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+</section>
+
+<script>
+  function mostrarContacto() {
+    const box = document.getElementById('contacto-box');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+<section>
+  <h2>Manifiesto</h2>
+  <button onclick="mostrarManifiesto()">Léelo aquí</button>
+  <div id="manifiesto-box" style="display:none; margin-top: 1rem;">
+    <p>Porque el futuro se construye escuchando al pasado. Porque cada historia puede guiar una decisión. Porque la sabiduría no debe quedarse en silencio.</p>
+    <p><em>Este proyecto es una carta de amor intergeneracional.</em></p>
+  </div>
+</section>
+
+<script>
+  function mostrarManifiesto() {
+    const box = document.getElementById('manifiesto-box');
+    box.style.display = box.style.display === 'none' ? 'block' : 'none';
+  }
+</script>
+
+
+
+<section>
+  <h2>Daniel – Fundador</h2>
+  <p>Soy Daniel, abogado de formación, periodista de vocación, experto en gestión de crisis públicas y guitarrista clásico por pasión. A mis 61 años, sigo convencido de que la experiencia es oro, aunque muchas veces las nuevas generaciones no lo vean así.</p>
+  <iframe width="100%" height="315" src="https://www.facebook.com/plugins/video.php?href=https://www.facebook.com/dajecapo/videos/1020733729967832" frameborder="0" allowfullscreen></iframe>
+  <audio controls>
+    <source src="jingle_adopta_un_sabio_demo.wav" type="audio/wav">
+    Tu navegador no soporta la reproducción de audio.
+  </audio>
+</section>
+
+  <footer>
+    &copy; 2025 Adopta un Sabio. Proyecto en construcción con amor y propósito.
+  </footer>
+</body>
+</html>
