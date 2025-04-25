@@ -5,40 +5,42 @@
 </section>
 
 <script>
-  async function actualizarEstado(rowIndex, nuevoEstado) {
-    try {
-      await fetch("https://script.google.com/macros/s/AKfycbzOcfcOZcbCKKfLubBtqO5hnN88esnZVTl_XXmpvWfjAKSBe4rrPvOiQlpSKCfZPw1Bkg/exec", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'update', row: rowIndex, estado: nuevoEstado })
+  function actualizarEstado(rowIndex, nuevoEstado) {
+    fetch(`https://script.google.com/macros/s/AKfycbzu3dL0B_7JCeKcCmuTg5rzHCutuxVixIYwB9Eu1mJyWzEr41E02rcSqNQPzYzZMjzs/exec?action=update&row=${rowIndex}&estado=${encodeURIComponent(nuevoEstado)}`)
+      .then(response => response.text())
+      .then(texto => {
+        alert("✅ Estado actualizado correctamente.");
+        cargarSolicitudes();
+      })
+      .catch(error => {
+        alert("❌ Error al actualizar la solicitud. Revisa la consola.");
+        console.error("Error al actualizar:", error);
       });
-      cargarSolicitudes();
-    } catch (error) {
-      console.error("Error al actualizar la solicitud:", error);
-    }
   }
 
-  async function eliminarRegistro(rowIndex) {
-    try {
-      await fetch("https://script.google.com/macros/s/AKfycbzOcfcOZcbCKKfLubBtqO5hnN88esnZVTl_XXmpvWfjAKSBe4rrPvOiQlpSKCfZPw1Bkg/exec", {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ action: 'delete', row: rowIndex })
+  function eliminarRegistro(rowIndex) {
+    fetch(`https://script.google.com/macros/s/AKfycbzu3dL0B_7JCeKcCmuTg5rzHCutuxVixIYwB9Eu1mJyWzEr41E02rcSqNQPzYzZMjzs/exec?action=delete&row=${rowIndex}`)
+      .then(response => response.text())
+      .then(texto => {
+        alert("🗑️ Solicitud eliminada correctamente.");
+        cargarSolicitudes();
+      })
+      .catch(error => {
+        alert("❌ Error al eliminar la solicitud. Revisa la consola.");
+        console.error("Error al eliminar:", error);
       });
-      cargarSolicitudes();
-    } catch (error) {
-      console.error("Error al eliminar la solicitud:", error);
-    }
   }
 
   async function cargarSolicitudes() {
     const contenedor = document.getElementById("solicitudes-pendientes");
+    contenedor.innerHTML = '<p>Cargando solicitudes...</p>';
     try {
-      const respuesta = await fetch("https://script.google.com/macros/s/AKfycbzOcfcOZcbCKKfLubBtqO5hnN88esnZVTl_XXmpvWfjAKSBe4rrPvOiQlpSKCfZPw1Bkg/exec");
+      const respuesta = await fetch("https://script.google.com/macros/s/AKfycbzu3dL0B_7JCeKcCmuTg5rzHCutuxVixIYwB9Eu1mJyWzEr41E02rcSqNQPzYzZMjzs/exec");
       const datos = await respuesta.json();
+
       const pendientes = datos
         .map((s, i) => ({ ...s, index: i + 2 }))
-        .filter(s => s["Estado"] && s["Estado"].toLowerCase() === "pendiente");
+        .filter(s => (s["Estado"] || '').toLowerCase() === "pendiente");
 
       if (pendientes.length === 0) {
         contenedor.innerHTML = '<p>No hay solicitudes pendientes.</p>';
@@ -51,8 +53,7 @@
         const div = document.createElement("div");
         div.classList.add("section");
         div.style.marginTop = "1em";
-        const descripcion = s["Pregunta o Mini biografía"] || "(Sin descripción disponible)";
-
+        const descripcion = s["Pregunta o Mini biografía"] || "(Sin descripción)";
         div.innerHTML = `
           <p><strong>Nombre:</strong> ${s["Nombre completo"] || s["Nombre"]}</p>
           <p><strong>Área:</strong> ${s["Área de experiencia"] || 'Consulta'}</p>
@@ -63,15 +64,15 @@
           <p><strong>Descripción:</strong> ${descripcion}</p>
           ${s["FotoURL"] ? `<img src="${s["FotoURL"]}" alt="Foto" style="border-radius: 50%; width: 150px; height: 150px;">` : ''}
           <div style="margin-top: 1em; display: flex; gap: 10px;">
-            <button class="button-toggle" onclick="actualizarEstado(${s.index}, 'Aprobado')" style="background-color: green; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">Aprobar</button>
-            <button class="button-toggle" onclick="eliminarRegistro(${s.index})" style="background-color: crimson; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
+            <button onclick="actualizarEstado(${s.index}, 'Aprobado')" style="background-color: green; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">Aprobar</button>
+            <button onclick="eliminarRegistro(${s.index})" style="background-color: crimson; color: white; padding: 5px 10px; border: none; border-radius: 5px; cursor: pointer;">Eliminar</button>
           </div>
         `;
         contenedor.appendChild(div);
       });
     } catch (error) {
-      console.error("Error al cargar las solicitudes:", error);
-      contenedor.innerHTML = '<p>Error al cargar las solicitudes. Intenta más tarde.</p>';
+      contenedor.innerHTML = '<p>❌ Error al cargar las solicitudes.</p>';
+      console.error("Error al cargar solicitudes:", error);
     }
   }
 
