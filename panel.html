@@ -1,8 +1,7 @@
 <section class="section" id="admin-panel">
-  <h2>Panel de Administración de Sabios y Consultas</h2>
-  <div id="solicitudes-pendientes">
-    <p>Cargando solicitudes...</p>
-  </div>
+  <h2 style="text-align: center; color: #a060c0;">Panel de Administración de Sabios y Consultas</h2>
+  <p style="text-align: center; font-style: italic; color: purple;">Esta sección es solo visible para el administrador.</p>
+  <div id="solicitudes-pendientes"></div>
 </section>
 
 <script>
@@ -43,6 +42,12 @@
         if (!s["Estado"] || s["Estado"] === "Pendiente" || s["Estado"] === "Consulta recibida") {
           const div = document.createElement("div");
           div.classList.add("section");
+          div.style.marginBottom = "2em";
+          div.style.border = "1px solid #ccc";
+          div.style.borderRadius = "10px";
+          div.style.padding = "1em";
+          div.style.background = "#fdf6f0";
+
           div.innerHTML = `
             <p><strong>Nombre:</strong> ${s["Nombre"] || s["Nombre completo"]}</p>
             ${s["Área de experiencia"] ? `<p><strong>Área:</strong> ${s["Área de experiencia"]}</p>` : ""}
@@ -51,9 +56,11 @@
             <p><strong>Email:</strong> ${s["Email"]}</p>
             <p><strong>Teléfono:</strong> ${s["Teléfono"]}</p>
             <p><strong>Consulta / Biografía:</strong> ${s["Pregunta o Mini biografía"]}</p>
-            ${s["FotoURL"] ? `<img src="${s["FotoURL"]}" alt="Foto" class="foto-fundador" style="border-radius: 50%; width: 150px; height: 150px;">` : ""}
-            <button class="button-toggle" style="background-color: green;" onclick="actualizarEstado(${i + 2}, 'Aprobado')">Aprobar</button>
-            <button class="button-toggle" style="background-color: crimson;" onclick="eliminarRegistro(${i + 2})">Eliminar</button>
+            ${s["FotoURL"] ? `<img src="${s["FotoURL"]}" alt="Foto" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 1em;">` : ""}
+            <div style="margin-top: 1em;">
+              <button onclick="actualizarEstado(${i + 2}, 'Aprobado')" style="background-color: #28a745; color: white; border: none; border-radius: 5px; padding: 10px 15px; margin-right: 10px; cursor: pointer;">✅ Aprobar</button>
+              <button onclick="eliminarRegistro(${i + 2})" style="background-color: #dc3545; color: white; border: none; border-radius: 5px; padding: 10px 15px; cursor: pointer;">🗑 Eliminar</button>
+            </div>
           `;
           contenedor.appendChild(div);
         }
