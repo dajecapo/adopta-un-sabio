@@ -1,3 +1,4 @@
+CÓDIGO DE NUEVO INTENTO FINAL DE ADOPTA UN SABIO
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -409,7 +410,7 @@
   </div>
 
   <div style="text-align: center; margin-top: 2em;">
-    <button class="button-toggle" id="toggleFormularioBtn" onclick="toggleFormulario()">Deja aquí tu testimonio</button>
+    <button class="button-toggle" id="toggleFormularioBtn" onclick="toggleFormularioTestimonio()">Deja aquí tu testimonio</button>
   </div>
 
   <div id="formulario-testimonio" class="oculto" style="margin-top: 2em;">
@@ -429,9 +430,9 @@
       </div>
       <div style="margin-bottom: 1em;">
         <label><strong>¿Eres humano? Resuelve:</strong></label><br>
-        <span id="captcha-operacion"></span>
-        <input type="number" id="captcha-respuesta" required style="width: 100%; padding: 0.5em; margin-top: 0.3em;">
-        <span id="captcha-validado" style="display: none; color: green; font-weight: bold;">✓ Verificado</span>
+        <span id="captcha-operacion-testimonio"></span>
+        <input type="number" id="captcha-respuesta-testimonio" required style="width: 100%; padding: 0.5em; margin-top: 0.3em;">
+        <span id="captcha-validado-testimonio" style="display: none; color: green; font-weight: bold;">✓ Verificado</span>
       </div>
       <button type="submit" class="button-toggle" style="margin-top: 1em;">Enviar testimonio</button>
     </form>
@@ -439,30 +440,31 @@
 </section>
 
 <script>
+(function () {
   let captchaTestimonio = 0;
 
-  function generarCaptcha() {
+  function generarCaptchaTestimonio() {
     const a = Math.floor(Math.random() * 9) + 1;
     const b = Math.floor(Math.random() * 9) + 1;
     captchaTestimonio = a + b;
-    document.getElementById("captcha-operacion").textContent = `${a} + ${b} =`;
-    document.getElementById("captcha-respuesta").value = "";
-    document.getElementById("captcha-validado").style.display = "none";
+    document.getElementById("captcha-operacion-testimonio").textContent = `${a} + ${b} =`;
+    document.getElementById("captcha-respuesta-testimonio").value = "";
+    document.getElementById("captcha-validado-testimonio").style.display = "none";
   }
 
-  function toggleFormulario() {
+  function toggleFormularioTestimonio() {
     const form = document.getElementById("formulario-testimonio");
     const toggleBtn = document.getElementById("toggleFormularioBtn");
     form.classList.toggle("oculto");
     toggleBtn.classList.toggle("activo");
     toggleBtn.textContent = form.classList.contains("oculto") ? "Deja aquí tu testimonio" : "Cerrar formulario";
     if (!form.classList.contains("oculto")) {
-      generarCaptcha();
-      actualizarContador();
+      generarCaptchaTestimonio();
+      actualizarContadorTestimonio();
     }
   }
 
-  function actualizarContador() {
+  function actualizarContadorTestimonio() {
     const input = document.getElementById("testimonio");
     const contador = document.getElementById("contador");
     const restante = 92 - input.value.length;
@@ -505,19 +507,19 @@
       });
   }
 
-  document.getElementById("captcha-respuesta").addEventListener("input", () => {
-    const respuesta = parseInt(document.getElementById("captcha-respuesta").value);
-    document.getElementById("captcha-validado").style.display = (respuesta === captchaTestimonio) ? "inline" : "none";
+  document.getElementById("captcha-respuesta-testimonio").addEventListener("input", () => {
+    const respuesta = parseInt(document.getElementById("captcha-respuesta-testimonio").value);
+    document.getElementById("captcha-validado-testimonio").style.display = (respuesta === captchaTestimonio) ? "inline" : "none";
   });
 
-  document.getElementById("testimonio").addEventListener("input", actualizarContador);
+  document.getElementById("testimonio").addEventListener("input", actualizarContadorTestimonio);
 
   document.getElementById("testimonioForm").addEventListener("submit", function (e) {
     e.preventDefault();
     const nombre = document.getElementById("nombre").value.trim();
     const testimonio = document.getElementById("testimonio").value.trim();
     const fecha = document.getElementById("fecha").value;
-    const captchaOK = document.getElementById("captcha-validado").style.display === "inline";
+    const captchaOK = document.getElementById("captcha-validado-testimonio").style.display === "inline";
 
     if (!nombre || !testimonio || !fecha || !captchaOK) {
       alert("Por favor, completa todos los campos y verifica el captcha.");
@@ -540,9 +542,9 @@
         if (res === "OK") {
           alert("¡Gracias por tu testimonio!");
           document.getElementById("testimonioForm").reset();
-          document.getElementById("captcha-validado").style.display = "none";
-          generarCaptcha();
-          actualizarContador();
+          document.getElementById("captcha-validado-testimonio").style.display = "none";
+          generarCaptchaTestimonio();
+          actualizarContadorTestimonio();
           cargarTestimonios();
         } else {
           alert("Error al enviar. Intenta de nuevo.");
@@ -555,10 +557,16 @@
   });
 
   window.addEventListener("DOMContentLoaded", () => {
-    generarCaptcha();
-    actualizarContador();
+    generarCaptchaTestimonio();
+    actualizarContadorTestimonio();
     cargarTestimonios();
   });
+
+  // 🌍 Exponer funciones globales para HTML
+  window.toggleFormularioTestimonio = toggleFormularioTestimonio;
+  window.cambiarSlide = cambiarSlide;
+
+})();
 </script>
 
 <!-- SECCIÓN: ¿TIENES ALGO QUE APORTAR? ¡SÚMATE! -->
