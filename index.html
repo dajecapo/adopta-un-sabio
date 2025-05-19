@@ -373,7 +373,7 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(92, 107, 192, 0.9);
+    background: #8e44ad;
     border: none;
     color: white;
     padding: 0.5em 1em;
@@ -385,7 +385,7 @@
   .carrusel-btn.izquierda { left: -15px; }
   .carrusel-btn.derecha { right: -15px; }
   .button-toggle {
-    background-color: #5c6bc0;
+    background-color: #8e44ad;
     color: white;
     border: none;
     padding: 0.6em 1.2em;
@@ -399,37 +399,12 @@
   }
 </style>
 
-<section class="section" id="testimonios">
+<section class="section" id="testimonios" style="max-width: 900px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
   <h2 class="titulo-seccion">Testimonios de usuarios</h2>
 
   <div class="carrusel-contenedor">
     <button class="carrusel-btn izquierda" onclick="cambiarSlide(-1)">&#10094;</button>
-    <div class="carrusel" id="carrusel-testimonios">
-      <div class="testimonio-slide activo">
-        <strong>María L.</strong>
-        <p>"Gracias a Adopta un Sabio encontré consejos valiosos para mi negocio."</p>
-      </div>
-      <div class="testimonio-slide">
-        <strong>Carlos P.</strong>
-        <p>"La experiencia de los sabios me inspiró a cambiar de carrera."</p>
-      </div>
-      <div class="testimonio-slide">
-        <strong>Laura G.</strong>
-        <p>"Una conexión genuina y enriquecedora."</p>
-      </div>
-      <div class="testimonio-slide">
-        <strong>Eduardo M.</strong>
-        <p>"Conversar con un sabio me dio claridad sobre decisiones importantes."</p>
-      </div>
-      <div class="testimonio-slide">
-        <strong>Renata Z.</strong>
-        <p>"Me sentí escuchada como nunca antes. Los sabios tienen un gran corazón."</p>
-      </div>
-      <div class="testimonio-slide">
-        <strong>Javier T.</strong>
-        <p>"Sus historias me ayudaron a entender la vida con otra perspectiva."</p>
-      </div>
-    </div>
+    <div class="carrusel" id="carrusel-testimonios"></div>
     <button class="carrusel-btn derecha" onclick="cambiarSlide(1)">&#10095;</button>
   </div>
 
@@ -461,130 +436,131 @@
       <button type="submit" class="button-toggle" style="margin-top: 1em;">Enviar testimonio</button>
     </form>
   </div>
-
-  <div style="text-align: center; margin-top: 2.5em;">
-    <a href="#inicio" class="button-toggle">Inicio</a>
-  </div>
 </section>
 
 <script>
-  window.onload = function () {
-    let indiceActual = 0;
-    const slides = document.querySelectorAll('.testimonio-slide');
-    const captchaOperacion = document.getElementById("captcha-operacion");
-    const captchaRespuesta = document.getElementById("captcha-respuesta");
-    const captchaValidado = document.getElementById("captcha-validado");
+  let captchaTestimonio = 0;
+
+  function generarCaptcha() {
+    const a = Math.floor(Math.random() * 9) + 1;
+    const b = Math.floor(Math.random() * 9) + 1;
+    captchaTestimonio = a + b;
+    document.getElementById("captcha-operacion").textContent = `${a} + ${b} =`;
+    document.getElementById("captcha-respuesta").value = "";
+    document.getElementById("captcha-validado").style.display = "none";
+  }
+
+  function toggleFormulario() {
+    const form = document.getElementById("formulario-testimonio");
     const toggleBtn = document.getElementById("toggleFormularioBtn");
-    const inputTestimonio = document.getElementById("testimonio");
-    const contadorTexto = document.getElementById("contador");
-    const MAX_CARACTERES = 92;
-
-    function mostrarSlide(indice) {
-      slides.forEach((slide, i) => slide.classList.remove('activo'));
-      slides[indice].classList.add('activo');
+    form.classList.toggle("oculto");
+    toggleBtn.classList.toggle("activo");
+    toggleBtn.textContent = form.classList.contains("oculto") ? "Deja aquí tu testimonio" : "Cerrar formulario";
+    if (!form.classList.contains("oculto")) {
+      generarCaptcha();
+      actualizarContador();
     }
+  }
 
-    function cambiarSlide(direccion) {
-      indiceActual = (indiceActual + direccion + slides.length) % slides.length;
-      mostrarSlide(indiceActual);
-    }
+  function actualizarContador() {
+    const input = document.getElementById("testimonio");
+    const contador = document.getElementById("contador");
+    const restante = 92 - input.value.length;
+    contador.textContent = `${restante} caracteres restantes`;
+  }
 
-    function autoAvance() {
-      cambiarSlide(1);
-    }
+  function cambiarSlide(direccion) {
+    const slides = document.querySelectorAll('.testimonio-slide');
+    let indice = Array.from(slides).findIndex(slide => slide.classList.contains('activo'));
+    if (indice === -1) return;
+    slides[indice].classList.remove('activo');
+    indice = (indice + direccion + slides.length) % slides.length;
+    slides[indice].classList.add('activo');
+  }
 
-    function limitarTestimonios(maximo = MAX_CARACTERES) {
-      const textos = document.querySelectorAll('.testimonio-slide p');
-      textos.forEach(p => {
-        if (p.textContent.length > maximo) {
-          p.textContent = p.textContent.slice(0, maximo).trim() + '...';
-        }
-      });
-    }
-
-    function actualizarContador() {
-      const restante = MAX_CARACTERES - inputTestimonio.value.length;
-      contadorTexto.textContent = `${restante} caracteres restantes`;
-    }
-
-    function toggleFormulario() {
-      const form = document.getElementById("formulario-testimonio");
-      form.classList.toggle("oculto");
-      toggleBtn.classList.toggle("activo");
-      toggleBtn.textContent = form.classList.contains("oculto") ? "Deja aquí tu testimonio" : "Cerrar formulario";
-      if (!form.classList.contains("oculto")) {
-        generarCaptcha();
-        actualizarContador();
-      }
-    }
-
-    function generarCaptcha() {
-      const a = Math.floor(Math.random() * 9) + 1;
-      const b = Math.floor(Math.random() * 9) + 1;
-      captchaOperacion.textContent = `${a} + ${b} = `;
-      captchaOperacion.dataset.resultado = a + b;
-      captchaRespuesta.value = "";
-      captchaValidado.style.display = "none";
-    }
-
-    captchaRespuesta.addEventListener("input", () => {
-      const esperado = parseInt(captchaOperacion.dataset.resultado);
-      const actual = parseInt(captchaRespuesta.value);
-      captchaValidado.style.display = actual === esperado ? "inline" : "none";
-    });
-
-    inputTestimonio.addEventListener("input", actualizarContador);
-
-    document.getElementById("testimonioForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const nombre = document.getElementById("nombre").value.trim();
-      const testimonio = inputTestimonio.value.trim();
-      const fecha = document.getElementById("fecha").value;
-      const captchaOK = captchaValidado.style.display === "inline";
-
-      if (!nombre || !testimonio || !fecha || !captchaOK) {
-        alert("Por favor, completa todos los campos y verifica el captcha.");
-        return;
-      }
-
-      const url = "https://script.google.com/macros/s/AKfycbxbl6XDcWRQ9tqtvSKWrsW_3eI17Ayaa3FxP9ZlIsZ1cU4CN475c448bz7WQFY7vSom/exec";
-      const data = new FormData();
-      data.append("nombre", nombre);
-      data.append("testimonio", testimonio);
-      data.append("fecha", fecha);
-      data.append("captcha", "ok");
-
-      fetch(url, {
-        method: "POST",
-        body: data
-      })
-        .then(response => response.text())
-        .then(res => {
-          if (res === "OK") {
-            alert("¡Gracias por tu testimonio!");
-            document.getElementById("testimonioForm").reset();
-            captchaValidado.style.display = "none";
-            generarCaptcha();
-            actualizarContador();
-          } else {
-            alert("Error al enviar. Intenta de nuevo.");
+  function cargarTestimonios() {
+    fetch("https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec?tipo=testimonios")
+      .then(res => res.json())
+      .then(datos => {
+        const carrusel = document.getElementById("carrusel-testimonios");
+        carrusel.innerHTML = "";
+        datos.slice(1).forEach(row => {
+          const nombre = row[0]?.trim();
+          const testimonio = row[1]?.trim();
+          const estatus = row[4]?.trim().toLowerCase();
+          if (estatus === "aprobado") {
+            const div = document.createElement("div");
+            div.className = "testimonio-slide";
+            div.innerHTML = `<strong>${nombre}</strong><p>"${testimonio}"</p>`;
+            carrusel.appendChild(div);
           }
-        })
-        .catch(err => {
-          alert("Error de conexión.");
-          console.error(err);
         });
-    });
+        const slides = document.querySelectorAll('.testimonio-slide');
+        if (slides.length > 0) {
+          slides[0].classList.add("activo");
+        }
+      })
+      .catch(error => {
+        console.error("Error al cargar testimonios:", error);
+      });
+  }
 
-    mostrarSlide(indiceActual);
-    setInterval(autoAvance, 5000);
-    limitarTestimonios();
+  document.getElementById("captcha-respuesta").addEventListener("input", () => {
+    const respuesta = parseInt(document.getElementById("captcha-respuesta").value);
+    document.getElementById("captcha-validado").style.display = (respuesta === captchaTestimonio) ? "inline" : "none";
+  });
+
+  document.getElementById("testimonio").addEventListener("input", actualizarContador);
+
+  document.getElementById("testimonioForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+    const nombre = document.getElementById("nombre").value.trim();
+    const testimonio = document.getElementById("testimonio").value.trim();
+    const fecha = document.getElementById("fecha").value;
+    const captchaOK = document.getElementById("captcha-validado").style.display === "inline";
+
+    if (!nombre || !testimonio || !fecha || !captchaOK) {
+      alert("Por favor, completa todos los campos y verifica el captcha.");
+      return;
+    }
+
+    const url = "https://script.google.com/macros/s/AKfycbxbl6XDcWRQ9tqtvSKWrsW_3eI17Ayaa3FxP9ZlIsZ1cU4CN475c448bz7WQFY7vSom/exec";
+    const data = new FormData();
+    data.append("nombre", nombre);
+    data.append("testimonio", testimonio);
+    data.append("fecha", fecha);
+    data.append("captcha", "ok");
+
+    fetch(url, {
+      method: "POST",
+      body: data
+    })
+      .then(response => response.text())
+      .then(res => {
+        if (res === "OK") {
+          alert("¡Gracias por tu testimonio!");
+          document.getElementById("testimonioForm").reset();
+          document.getElementById("captcha-validado").style.display = "none";
+          generarCaptcha();
+          actualizarContador();
+          cargarTestimonios();
+        } else {
+          alert("Error al enviar. Intenta de nuevo.");
+        }
+      })
+      .catch(err => {
+        alert("Error de conexión.");
+        console.error(err);
+      });
+  });
+
+  window.addEventListener("DOMContentLoaded", () => {
+    generarCaptcha();
     actualizarContador();
-
-    window.cambiarSlide = cambiarSlide;
-    window.toggleFormulario = toggleFormulario;
-  };
+    cargarTestimonios();
+  });
 </script>
+
 <!-- SECCIÓN: ¿TIENES ALGO QUE APORTAR? ¡SÚMATE! -->
 <style>
   .boton-desplegar {
@@ -799,13 +775,17 @@
 </script>
 <!-- SECCIÓN 8: Preguntas Frecuentes (FAQ) -->
 <section id="faq" style="padding: 40px 20px; background-color: #f9f9f9; font-family: 'Roboto', sans-serif;">
+  <div style="max-width: 900px; margin: auto; background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     <h2 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Preguntas Frecuentes</h2>
+
     <div style="text-align: center; margin-bottom: 20px;">
       <button id="toggleFaq" onclick="toggleFaq()" style="padding: 10px 20px; font-size: 16px; border: none; background-color: #8e44ad; color: white; border-radius: 8px; cursor: pointer; transition: background-color 0.3s;">
         Ver respuestas
       </button>
     </div>
-    <div id="faqContainer" style="display: none; max-width: 800px; margin: auto;">
+
+    <!-- CONTENEDOR CON PREGUNTAS -->
+    <div id="faqContainer" style="display: none;">
       <div class="faq-item" onclick="toggleAnswer(this)">
         <div class="question">¿Qué es Adopta un Sabio?</div>
         <div class="answer">Es un proyecto social que conecta a personas sabias con jóvenes que buscan orientación, inspiración o conocimientos prácticos de vida.</div>
@@ -827,216 +807,207 @@
         <div class="answer">Desde dudas personales o vocacionales hasta consejos prácticos sobre vida, familia, trabajo o convivencia social. ¡Los sabios tienen mucho que compartir!</div>
       </div>
     </div>
-  </section>
-  
-  <style>
-    .faq-item {
-      background-color: #fff;
-      margin-bottom: 10px;
-      border-radius: 10px;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-      overflow: hidden;
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-  
-    .question {
-      background-color: #f4e1f7; /* color pastel lavanda */
-      padding: 15px;
-      font-weight: bold;
-      font-size: 1.1em;
-      transition: background-color 0.3s;
-    }
-  
-    .faq-item:hover .question {
-      background-color: #ecd6f5; /* tono más claro al pasar */
-    }
-  
-    .answer {
-      display: none;
-      padding: 15px;
-      font-size: 0.95em;
-      color: #333;
-      background-color: #ffffff;
-    }
-  </style>
-  
-  <script>
-    function toggleFaq() {
-      const faq = document.getElementById('faqContainer');
-      const button = document.getElementById('toggleFaq');
-      if (faq.style.display === "none") {
-        faq.style.display = "block";
-        button.textContent = "Cerrar";
-        button.style.backgroundColor = "#c0392b";
-      } else {
-        faq.style.display = "none";
-        button.textContent = "Ver respuestas";
-        button.style.backgroundColor = "#8e44ad";
-      }
-    }
-  
-    function toggleAnswer(element) {
-      const answer = element.querySelector('.answer');
-      answer.style.display = (answer.style.display === 'block') ? 'none' : 'block';
-    }
-  </script>
-<!-- BOTÓN DESPLEGABLE -->
-<div style="text-align: center; margin-top: 40px;">
-    <button class="button-toggle" onclick="toggleFundador()" id="btnFundador">Ver Fundador</button>
   </div>
-  
-  <!-- SECCIÓN FUNDADOR OCULTA -->
-  <section id="fundador" style="display: none; padding: 40px 20px; background-color: #fdfdfd; font-family: 'Segoe UI', sans-serif;">
-    <div style="max-width: 900px; margin: auto; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 30px;">
-  
-      <h2 style="text-align:center; font-size: 30px; margin-bottom: 30px; color: #2c3e50;">Fundador</h2>
-  
-      <div style="display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: center; flex-wrap: wrap;">
-        <!-- Foto -->
-        <div style="text-align: center;">
-          <img src="https://raw.githubusercontent.com/dajecapo/adopta-un-sabio/main/mi-foto.jpeg" alt="Daniel Jesús Carrillo Polanco" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 12px rgba(0,0,0,0.2); border: 4px solid #e0e0e0;">
-        </div>
-  
-        <!-- Información -->
-        <div>
-          <h3 style="margin: 0 0 8px; color: #34495e;">Daniel Jesús Carrillo Polanco</h3>
-          <p style="margin: 0; font-size: 16px; color: #555;">
-            Abogado, Periodista, Máster en Comunicación Política y Marketing Electoral, Músico, Guitarrista, Diplomado en IA.
-          </p>
-        </div>
+</section>
+
+<style>
+  .faq-item {
+    background-color: #fff;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  .question {
+    background-color: #f4e1f7;
+    padding: 15px;
+    font-weight: bold;
+    font-size: 1.1em;
+    transition: background-color 0.3s;
+  }
+
+  .faq-item:hover .question {
+    background-color: #ecd6f5;
+  }
+
+  .answer {
+    display: none;
+    padding: 15px;
+    font-size: 0.95em;
+    color: #333;
+    background-color: #ffffff;
+  }
+</style>
+
+<script>
+  function toggleFaq() {
+    const faq = document.getElementById('faqContainer');
+    const button = document.getElementById('toggleFaq');
+    if (faq.style.display === "none") {
+      faq.style.display = "block";
+      button.textContent = "Cerrar";
+      button.style.backgroundColor = "#c0392b";
+    } else {
+      faq.style.display = "none";
+      button.textContent = "Ver respuestas";
+      button.style.backgroundColor = "#8e44ad";
+    }
+  }
+
+  function toggleAnswer(element) {
+    const answer = element.querySelector('.answer');
+    answer.style.display = (answer.style.display === 'block') ? 'none' : 'block';
+  }
+</script>
+<!-- BOTÓN DESPLEGABLE -->
+<div class="section" style="text-align: center; margin-top: 40px;">
+  <h2 style="color: #4a148c; font-size: 1.8em; margin-bottom: 20px;">Creador de este proyecto</h2>
+  <button class="button-toggle" onclick="toggleFundador()" id="btnFundador" style="background-color: #6a1b9a; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease;">
+    Ver Fundador
+  </button>
+</div>
+
+<!-- SECCIÓN FUNDADOR OCULTA -->
+<section id="fundador" style="display: none; padding: 40px 20px; background-color: #fdfdfd; font-family: 'Segoe UI', sans-serif;">
+  <div style="max-width: 900px; margin: auto; background: white; border-radius: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); padding: 30px;">
+
+    <h2 style="text-align:center; font-size: 30px; margin-bottom: 30px; color: #2c3e50;">Fundador</h2>
+
+    <div style="display: grid; grid-template-columns: 150px 1fr; gap: 20px; align-items: center; flex-wrap: wrap;">
+      <!-- Foto -->
+      <div style="text-align: center;">
+        <img src="https://raw.githubusercontent.com/dajecapo/adopta-un-sabio/main/mi-foto.jpeg" alt="Daniel Jesús Carrillo Polanco" style="width: 150px; height: 150px; border-radius: 50%; object-fit: cover; box-shadow: 0 0 12px rgba(0,0,0,0.2); border: 4px solid #e0e0e0;">
       </div>
-  
-      <!-- Mensaje -->
-      <div style="margin-top: 30px; text-align: justify; font-size: 16px; line-height: 1.6; color: #444;">
-        <p id="mensaje-fundador" style="overflow: hidden; max-height: 5.5em; transition: max-height 0.5s ease;">
-          Hola, soy Daniel, te quiero presentar un movimiento denominado <strong>ADOPTA UN SABIO</strong>... 
-          <span id="texto-adicional" style="display: none;">
-          <br><br>
-          Soy abogado de formación, periodista de vocación, experto en gestión de crisis públicas y guitarrista clásico por pasión. A mis 61 años, sigo convencido de que la experiencia es oro, aunque muchas veces las nuevas generaciones no lo vean así.
-          <br><br>
-          Lejos de quedarme atrás, hoy estudio Inteligencia Artificial, porque creo firmemente que nunca es tarde para aprender, crecer y reinventarse.
-          <br><br>
-          Los adultos mayores no somos el pasado: somos una fuente viva de sabiduría, historias y soluciones que pueden iluminar el futuro.
-          <br><br>
-          Las nuevas generaciones merecen conocer los caminos que ya recorrimos, para que su propio andar sea más liviano, más sabio y más humano.
-          <br><br>
-          ✨ Si tú también tienes una historia, un consejo, un talento o una lección de vida que pueda ayudar a alguien más, únete a este movimiento. No dejemos que la sabiduría se quede en silencio. Juntos podemos hacer algo grande para la humanidad.
-          </span>
+
+      <!-- Información -->
+      <div>
+        <h3 style="margin: 0 0 8px; color: #34495e;">Daniel Jesús Carrillo Polanco</h3>
+        <p style="margin: 0; font-size: 16px; color: #555;">
+          Abogado, Periodista, Máster en Comunicación Política y Marketing Electoral, Músico, Guitarrista, Diplomado en IA.
         </p>
-  
-        <div style="text-align: center; margin-top: 15px;">
-          <button id="boton-leer-mas" class="button-toggle" onclick="toggleMensaje()">Leer más</button>
-        </div>
-      </div>
-  
-      <!-- Audio -->
-      <div style="text-align: center; margin-top: 30px;">
-        <audio id="audioFundador" src="https://github.com/dajecapo/adopta-un-sabio/raw/main/adoptaun%20sabiomensaje.mp3" preload="none"></audio>
-        <button class="button-toggle" onclick="toggleAudio()">▶️ Reproducir / ⏸️ Detener</button>
       </div>
     </div>
-  </section>
-  
-  <!-- ESTILO DE BOTONES -->
-  <style>
-  .button-toggle {
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    font-size: 16px;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .button-toggle:hover {
-    background-color: #388e3c;
-  }
-  </style>
-  
-  <!-- SCRIPT -->
-  <script>
-  function toggleFundador() {
-    const seccion = document.getElementById("fundador");
-    const boton = document.getElementById("btnFundador");
-  
-    if (seccion.style.display === "none") {
-      seccion.style.display = "block";
-      boton.textContent = "Cerrar Fundador";
-      window.scrollTo({ top: seccion.offsetTop - 60, behavior: 'smooth' });
-    } else {
-      seccion.style.display = "none";
-      boton.textContent = "Ver Fundador";
-    }
-  }
-  
-  function toggleMensaje() {
-    const texto = document.getElementById('texto-adicional');
-    const boton = document.getElementById('boton-leer-mas');
-    const mensaje = document.getElementById('mensaje-fundador');
-  
-    if (texto.style.display === "none") {
-      texto.style.display = "inline";
-      mensaje.style.maxHeight = "100em";
-      boton.textContent = "Leer menos";
-    } else {
-      texto.style.display = "none";
-      mensaje.style.maxHeight = "5.5em";
-      boton.textContent = "Leer más";
-    }
-  }
-  
-  function toggleAudio() {
-    const audio = document.getElementById('audioFundador');
-    if (audio.paused) {
-      audio.play();
-    } else {
-      audio.pause();
-    }
-  }
-  </script>
-  <!-- SECCIÓN: CONTÁCTANOS -->
-<section id="contacto" style="padding: 40px; font-family: 'Segoe UI', sans-serif; background: #fdfdfd; color: #333;">
-  <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
-  <div style="text-align:center; margin-bottom: 20px;">
-    <button onclick="toggleContacto()" id="btnToggleContacto" style="background-color: #4caf50; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 6px; cursor: pointer;">
-      Mostrar formulario
-    </button>
-  </div>
 
-  <div id="formularioContacto" style="display: none; max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-    <form id="contactoForm" onsubmit="enviarContacto(event)" novalidate>
-      <label style="font-weight: bold;">Nombre:</label>
-      <input type="text" name="nombre" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
+    <!-- Mensaje -->
+    <div style="margin-top: 30px; text-align: justify; font-size: 16px; line-height: 1.6; color: #444;">
+      <p id="mensaje-fundador" style="overflow: hidden; max-height: 5.5em; transition: max-height 0.5s ease;">
+        Hola, soy Daniel, te quiero presentar un movimiento denominado <strong>ADOPTA UN SABIO</strong>... 
+        <span id="texto-adicional" style="display: none;">
+        <br><br>
+        Soy abogado de formación, periodista de vocación, experto en gestión de crisis públicas y guitarrista clásico por pasión. A mis 61 años, sigo convencido de que la experiencia es oro, aunque muchas veces las nuevas generaciones no lo vean así.
+        <br><br>
+        Lejos de quedarme atrás, hoy estudio Inteligencia Artificial, porque creo firmemente que nunca es tarde para aprender, crecer y reinventarse.
+        <br><br>
+        Los adultos mayores no somos el pasado: somos una fuente viva de sabiduría, historias y soluciones que pueden iluminar el futuro.
+        <br><br>
+        Las nuevas generaciones merecen conocer los caminos que ya recorrimos, para que su propio andar sea más liviano, más sabio y más humano.
+        <br><br>
+        ✨ Si tú también tienes una historia, un consejo, un talento o una lección de vida que pueda ayudar a alguien más, únete a este movimiento. No dejemos que la sabiduría se quede en silencio. Juntos podemos hacer algo grande para la humanidad.
+        </span>
+      </p>
 
-      <label style="font-weight: bold;">Teléfono (10 dígitos):</label>
-      <input type="tel" id="telefono" name="telefono" required pattern="\d{10}" placeholder="Ej. 9991234567" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
-
-      <label style="font-weight: bold;">Email:</label>
-      <input type="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
-
-      <label style="font-weight: bold;">Fecha:</label>
-      <input type="date" name="fecha" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
-
-      <label style="font-weight: bold;">Mensaje (máx. 100 caracteres):</label>
-      <textarea id="mensaje" name="mensaje" maxlength="100" required placeholder="Tu mensaje breve..." style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
-      <div style="text-align: right; font-size: 12px; color: #666; margin-bottom: 15px;">
-        <span id="contadorMensaje">0</span>/100 caracteres
+      <div style="text-align: center; margin-top: 15px;">
+        <button id="boton-leer-mas" class="button-toggle" onclick="toggleMensaje()" style="background-color: #6a1b9a; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease;">
+          Leer más
+        </button>
       </div>
+    </div>
 
-      <!-- CAPTCHA -->
-      <div id="captchaContacto" style="margin-bottom: 15px;">
-        <label style="font-weight: bold;"><span id="captchaPregunta"></span></label>
-        <input type="number" id="captchaRespuesta" required placeholder="Respuesta" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px;">
-        <span id="captchaCheck" style="color: green; font-size: 20px; display: none;">✔</span>
-      </div>
-
-      <button type="submit" style="background-color: #2196f3; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
-        Enviar mensaje
+    <!-- Audio -->
+    <div style="text-align: center; margin-top: 30px;">
+      <audio id="audioFundador" src="https://github.com/dajecapo/adopta-un-sabio/raw/main/adoptaun%20sabiomensaje.mp3" preload="none"></audio>
+      <button class="button-toggle" onclick="toggleAudio()" style="background-color: #6a1b9a; color: white; border: none; padding: 12px 24px; font-size: 16px; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease;">
+        ▶️ Reproducir / ⏸️ Detener
       </button>
-    </form>
+    </div>
+  </div>
+</section>
+
+<script>
+function toggleFundador() {
+  const seccion = document.getElementById("fundador");
+  const boton = document.getElementById("btnFundador");
+
+  if (seccion.style.display === "none") {
+    seccion.style.display = "block";
+    boton.textContent = "Cerrar Fundador";
+    window.scrollTo({ top: seccion.offsetTop - 60, behavior: 'smooth' });
+  } else {
+    seccion.style.display = "none";
+    boton.textContent = "Ver Fundador";
+  }
+}
+
+function toggleMensaje() {
+  const texto = document.getElementById('texto-adicional');
+  const boton = document.getElementById('boton-leer-mas');
+  const mensaje = document.getElementById('mensaje-fundador');
+
+  if (texto.style.display === "none") {
+    texto.style.display = "inline";
+    mensaje.style.maxHeight = "100em";
+    boton.textContent = "Leer menos";
+  } else {
+    texto.style.display = "none";
+    mensaje.style.maxHeight = "5.5em";
+    boton.textContent = "Leer más";
+  }
+}
+
+function toggleAudio() {
+  const audio = document.getElementById('audioFundador');
+  if (audio.paused) {
+    audio.play();
+  } else {
+    audio.pause();
+  }
+}
+</script>
+<!-- SECCIÓN: CONTÁCTANOS -->
+<section id="contacto" style="padding: 40px 20px; background-color: #fdfdfd; font-family: 'Segoe UI', sans-serif;">
+  <div style="max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
+    <div style="text-align:center; margin-bottom: 20px;">
+      <button onclick="toggleContacto()" id="btnToggleContacto" style="background-color: #8e44ad; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
+        Mostrar formulario
+      </button>
+    </div>
+
+    <div id="formularioContacto" style="display: none; max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <form id="contactoForm" onsubmit="enviarContacto(event)" novalidate>
+        <label style="font-weight: bold;">Nombre:</label>
+        <input type="text" name="nombre" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
+
+        <label style="font-weight: bold;">Teléfono (10 dígitos):</label>
+        <input type="tel" id="telefono" name="telefono" required pattern="\d{10}" placeholder="Ej. 9991234567" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
+
+        <label style="font-weight: bold;">Email:</label>
+        <input type="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
+
+        <label style="font-weight: bold;">Fecha:</label>
+        <input type="date" name="fecha" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
+
+        <label style="font-weight: bold;">Mensaje (máx. 100 caracteres):</label>
+        <textarea id="mensaje" name="mensaje" maxlength="100" required placeholder="Tu mensaje breve..." style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
+        <div style="text-align: right; font-size: 12px; color: #666; margin-bottom: 15px;">
+          <span id="contadorMensaje">0</span>/100 caracteres
+        </div>
+
+        <!-- CAPTCHA -->
+        <div id="captchaContacto" style="margin-bottom: 15px;">
+          <label style="font-weight: bold;"><span id="captchaPregunta"></span></label>
+          <input type="number" id="captchaRespuesta" required placeholder="Respuesta" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px;">
+          <span id="captchaCheck" style="color: green; font-size: 20px; display: none;">✔</span>
+        </div>
+
+        <button type="submit" style="background-color: #8e44ad; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
+          Enviar mensaje
+        </button>
+      </form>
+    </div>
   </div>
 </section>
 
@@ -1048,11 +1019,11 @@
     if (form.style.display === "none") {
       form.style.display = "block";
       btn.textContent = "Cerrar formulario";
-      btn.style.backgroundColor = "#f44336";
+      btn.style.backgroundColor = "#c0392b";
     } else {
       form.style.display = "none";
       btn.textContent = "Mostrar formulario";
-      btn.style.backgroundColor = "#4caf50";
+      btn.style.backgroundColor = "#8e44ad";
     }
   }
 
@@ -1127,11 +1098,12 @@
 </script>
 <!-- SECCIÓN: MÚSICA DEL SITIO -->
 <section id="musica" style="padding: 40px; background-color: #f8f8f8; font-family: 'Segoe UI', sans-serif;">
+  <div style="max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     <h2 style="text-align:center; font-size: 28px; color: #333;">🎼 Música del sitio</h2>
-    
+
     <div style="text-align:center; margin-top: 20px;">
       <button onclick="toggleJingle()" id="btnToggleJingle" style="
-        background-color: #6a5acd;
+        background-color: #8e44ad;
         color: white;
         border: none;
         padding: 10px 20px;
@@ -1143,7 +1115,7 @@
         🎧 Mostrar reproductor
       </button>
     </div>
-  
+
     <div id="jingleContainer" style="display: none; margin-top: 20px; text-align: center;">
       <audio id="jingleAudio" src="https://github.com/dajecapo/adopta-un-sabio/raw/main/adopta%20un%20sabio.mp3" preload="auto"></audio>
       
@@ -1160,16 +1132,16 @@
         transition: background-color 0.3s;">
         🎵 Escuchar jingle del sitio
       </button>
-  
+
       <p style="margin-top: 10px; font-style: italic; color: #555;">
         Jingle: <strong>“Experiencia”</strong><br>
         Autor e intérprete: <strong>Daniel Jesús Carrillo Polanco</strong>
       </p>
     </div>
-  </section>
-  
-  <script>
-  // Mostrar u ocultar el reproductor
+  </div>
+</section>
+
+<script>
   function toggleJingle() {
     const contenedor = document.getElementById('jingleContainer');
     const boton = document.getElementById('btnToggleJingle');
@@ -1181,8 +1153,7 @@
       boton.textContent = '🎧 Mostrar reproductor';
     }
   }
-  
-  // Reproducir el jingle si está pausado
+
   function reproducirJingle() {
     const audio = document.getElementById('jingleAudio');
     if (audio && audio.paused) {
@@ -1191,12 +1162,11 @@
       });
     }
   }
-  
-  // Reproducción automática al primer clic, scroll o toque
+
   ['click', 'scroll', 'touchstart'].forEach(evt => {
     document.addEventListener(evt, reproducirJingle, { once: true });
   });
-  </script>
+</script>
 <!-- PIE DE PÁGINA -->
 <footer style="background-color: #000; padding: 30px 10px; font-family: 'Segoe UI', sans-serif; font-size: 14px; color: #fff;">
   <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; text-align: center; flex-wrap: wrap;" class="footer-content">
