@@ -1,4 +1,3 @@
-CÓDIGO DE NUEVO INTENTO FINAL DE ADOPTA UN SABIO
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -6,6 +5,35 @@ CÓDIGO DE NUEVO INTENTO FINAL DE ADOPTA UN SABIO
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopta un Sabio</title>
   <style>
+/* === COLOR DE FONDO UNIFICADO === */
+body {
+  background-color: #f5f5f5 !important;
+  margin: 0;
+  padding: 0;
+}
+
+/* === ESTILOS RESPONSIVOS PARA CELULAR === */
+@media screen and (max-width: 768px) {
+  .section, form, .card, .testimonio-slide, .carrusel-contenedor {
+    width: 95% !important;
+    margin: auto !important;
+    padding: 1em !important;
+  }
+
+  input, textarea, button {
+    font-size: 1em !important;
+    width: 100% !important;
+  }
+
+  h2, h3, h4 {
+    font-size: 1.4em !important;
+    text-align: center !important;
+  }
+
+  .carrusel-btn {
+    display: none !important;
+  }
+}
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
@@ -166,179 +194,154 @@ CÓDIGO DE NUEVO INTENTO FINAL DE ADOPTA UN SABIO
     element.style.display = (element.style.display === "none" || element.style.display === "") ? "block" : "none";
   }
 </script>
-<!-- SECCIÓN: GALERÍA DE SABIOS -->
-<style>
-  .card {
-    background-color: white;
-    padding: 1.5em;
-    border-radius: 15px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    max-width: 400px;
-    margin: 0 auto 2em auto;
-  }
-
-  .card button {
-    background-color: #2a9d8f;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1em;
-  }
-
-  .card button:hover {
-    background-color: #21867a;
-  }
-
-  .hidden {
-    display: none;
-  }
-
-  form input, form textarea {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1em;
-    width: 100%;
-    box-sizing: border-box;
-  }
-
-  form button {
-    background-color: #2a9d8f;
-    color: white;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1em;
-  }
-
-  form button:hover {
-    background-color: #21867a;
-  }
-</style>
-
-<section class="section">
-  <h2 style="text-align: center; font-size: 2em; color: #264653;">Galería de Sabios</h2>
-
-  <div class="card">
-    <p style="font-size: 1.4em; font-weight: bold; color: #2a9d8f;">Daniel Jesús Carrillo Polanco</p>
-    <p style="font-size: 1.1em; color: #555;">61 años de edad</p>
-    <p style="font-size: 1.1em; color: #555;">Experto en Gestión de crisis</p>
-    <button onclick="document.getElementById('consultaDaniel').classList.toggle('hidden')">¡Haz tu consulta aquí!</button>
+<!-- SECCIÓN: GALERÍA DE SABIOS (dinámico desde hoja SUMATE) -->
+<section class="section" style="max-width: 900px; margin: auto; padding: 2em;">
+  <h2 style="text-align:center; font-size: 2em; color: #4a148c;">Galería de Sabios</h2>
+  <div style="text-align:center; margin-bottom:1em;">
+    <button onclick="toggleGaleria()" style="background-color:#8e44ad; color:white; border:none; padding:0.6em 1.2em; border-radius:8px; cursor:pointer; font-size:1em;">Mostrar sabios</button>
   </div>
-
-  <div id="contadorConsultas" style="text-align: center; color: #264653; margin-bottom: 1em;">
-    Preguntas realizadas: <strong id="contadorNumero">0</strong>
-  </div>
-
-  <div id="consultaDaniel" class="hidden" style="margin-top: 2em;">
-    <form id="consultaForm" method="POST"
-      action="https://script.google.com/macros/s/AKfycbyGS-uQR4qn_LjAXghsTBirHton-35HA4AK7GdKm-MEumcZmWE4L7vJ0M1EaHzEkghY/exec"
-      target="hidden_iframe" onsubmit="return enviarFormulario();"
-      style="max-width: 400px; margin: 0 auto; display: flex; flex-direction: column; gap: 1em;">
-      <input type="text" id="nombreConsulta" name="Nombre" placeholder="Tu nombre" required>
-      <input type="tel" id="telefonoConsulta" name="Telefono" placeholder="Teléfono (10 dígitos)" pattern="\d{10}" required>
-      <input type="email" id="emailConsulta" name="Email" placeholder="Correo electrónico" required>
-      <textarea id="preguntaConsulta" name="Pregunta" placeholder="Escribe tu pregunta (máx. 50 palabras)" required></textarea>
-      <div id="contadorPalabras" style="font-size: 0.9em; color: #777;">0/50 palabras</div>
-      <input type="date" id="fechaConsulta" name="Fecha" required>
-      <label id="captcha-label-consulta"></label>
-      <input type="text" id="captchaConsulta" placeholder="Resultado" required>
-      <label><input type="checkbox" id="checkRobot" required> Confirmo que no soy un robot</label>
-      <button type="submit">Enviar</button>
-    </form>
-    <p id="respuestaConsulta" style="text-align: center; font-style: italic; margin-top: 1em;"></p>
+  <div id="contenedor-galeria" style="display:none;">
+    <div id="sabios-aprobados" style="display: flex; flex-wrap: wrap; gap: 1em; justify-content: center;"></div>
   </div>
 </section>
 
-<iframe name="hidden_iframe" style="display: none;"></iframe>
+<!-- Formularios dinámicos -->
+<div id="formulario-sabio" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); z-index:9999; align-items:center; justify-content:center;">
+  <div style="background:white; padding:2em; border-radius:15px; max-width:400px; width:90%; position:relative;">
+    <button onclick="cerrarFormularioSabio()" style="position:absolute; top:10px; right:10px; background:#d32f2f; color:white; border:none; border-radius:50%; width:30px; height:30px; cursor:pointer;">&times;</button>
+    <h3 id="titulo-sabio"></h3>
+    <form onsubmit="return enviarConsultaSabio();">
+      <input type="hidden" id="telefonoSabio">
+      <input type="hidden" id="nombreSabio">
+      <label>Tu nombre:</label>
+      <input type="text" id="nombreUsuario" required style="width:100%; padding:0.5em; margin-bottom:1em;">
+      <label>Tu teléfono:</label>
+      <input type="tel" id="telefonoUsuario" required pattern="\d{10}" style="width:100%; padding:0.5em; margin-bottom:1em;">
+      <label>Tu pregunta (máx. 50 palabras):</label>
+      <textarea id="preguntaUsuario" required style="width:100%; padding:0.5em; margin-bottom:0.3em;"></textarea>
+      <small id="contadorPalabras" style="display:block; font-size:0.9em; color:#777; margin-bottom:1em;">0/50 palabras</small>
+      <label id="captcha-label-sabio"></label>
+      <input type="text" id="captcha-sabio" required style="width:100%; padding:0.5em; margin-bottom:1em;">
+      <button type="submit" style="background:#6a1b9a; color:white; padding:0.7em; border:none; border-radius:8px; width:100%; font-size:1em;">Enviar consulta</button>
+    </form>
+  </div>
+</div>
 
 <script>
-  let captchaSumaConsulta = 0;
-  let contadorConsultas = 0;
+  let captchaRespuestaSabio = 0;
+  let telefonoSabioActual = "";
 
-  function generarCaptchaConsulta() {
-    const a = Math.floor(Math.random() * 9) + 1;
-    const b = Math.floor(Math.random() * 9) + 1;
-    captchaSumaConsulta = a + b;
-    document.getElementById("captcha-label-consulta").textContent =
-      `No soy robot: ¿Cuánto es ${a} + ${b}?`;
+  function toggleGaleria() {
+    const galeria = document.getElementById("contenedor-galeria");
+    const boton = event.target;
+    galeria.style.display = galeria.style.display === "none" ? "block" : "none";
+    boton.textContent = galeria.style.display === "none" ? "Mostrar sabios" : "Cerrar galería";
+    boton.style.backgroundColor = galeria.style.display === "none" ? "#8e44ad" : "#d32f2f";
   }
 
-  function enviarFormulario() {
-    const telefono = document.getElementById("telefonoConsulta").value.trim();
-    const email = document.getElementById("emailConsulta").value.trim();
-    const pregunta = document.getElementById("preguntaConsulta").value.trim();
-    const fecha = document.getElementById("fechaConsulta").value;
-    const captcha = parseInt(document.getElementById("captchaConsulta").value.trim(), 10);
-    const check = document.getElementById("checkRobot").checked;
-    const palabras = pregunta.split(/\s+/).filter(p => p.length > 0);
-    const respuesta = document.getElementById("respuestaConsulta");
+  function cargarSabios() {
+    fetch("https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec?tipo=sumate")
+      .then(res => res.json())
+      .then(data => {
+        const contenedor = document.getElementById("sabios-aprobados");
+        contenedor.innerHTML = "";
+        data.slice(1).forEach(row => {
+          const [nombre, edad, area, email, telefono, fecha, estatus] = row;
+          if (estatus.toLowerCase() === "aprobado") {
+            const card = document.createElement("div");
+            card.style = "background:white; border-radius:15px; box-shadow:0 2px 6px rgba(0,0,0,0.1); padding:1.2em; text-align:center; width:250px;";
+            card.innerHTML = `
+              <h4 style='color:#4a148c;'>${nombre}</h4>
+              <p><strong>Edad:</strong> ${edad}</p>
+              <p><strong>Área:</strong> ${area}</p>
+              <button style='background:#8e44ad; color:white; padding:0.5em 1em; border:none; border-radius:8px; cursor:pointer;' onclick="abrirFormularioSabio('${nombre}', '${telefono}')">Haz tu consulta</button>
+            `;
+            contenedor.appendChild(card);
+          }
+        });
+      });
+  }
 
-    if (!/^\d{10}$/.test(telefono)) {
-      respuesta.textContent = "❌ El teléfono debe tener 10 dígitos.";
-      respuesta.style.color = "red";
+  function abrirFormularioSabio(nombre, telefono) {
+    telefonoSabioActual = telefono;
+    document.getElementById("formulario-sabio").style.display = "flex";
+    document.getElementById("titulo-sabio").textContent = `Consulta para ${nombre}`;
+    document.getElementById("telefonoSabio").value = telefono;
+    document.getElementById("nombreSabio").value = nombre;
+    document.getElementById("nombreUsuario").value = "";
+    document.getElementById("telefonoUsuario").value = "";
+    document.getElementById("preguntaUsuario").value = "";
+    generarCaptchaSabio();
+    actualizarContadorPalabras();
+  }
+
+  function cerrarFormularioSabio() {
+    document.getElementById("formulario-sabio").style.display = "none";
+  }
+
+  function generarCaptchaSabio() {
+    const a = Math.floor(Math.random() * 9) + 1;
+    const b = Math.floor(Math.random() * 9) + 1;
+    captchaRespuestaSabio = a + b;
+    document.getElementById("captcha-label-sabio").textContent = `¿Cuánto es ${a} + ${b}?`;
+    document.getElementById("captcha-sabio").value = "";
+  }
+
+  function actualizarContadorPalabras() {
+    const textarea = document.getElementById("preguntaUsuario");
+    const contador = document.getElementById("contadorPalabras");
+    const palabras = textarea.value.trim().split(/\s+/).filter(p => p);
+    contador.textContent = `${palabras.length}/50 palabras`;
+    contador.style.color = palabras.length > 50 ? "red" : "#777";
+  }
+
+  function enviarConsultaSabio() {
+    const nombre = document.getElementById("nombreUsuario").value.trim();
+    const telefonoUsuario = document.getElementById("telefonoUsuario").value.trim();
+    const pregunta = document.getElementById("preguntaUsuario").value.trim();
+    const telefono = telefonoSabioActual;
+    const sabio = document.getElementById("nombreSabio").value;
+    const captcha = parseInt(document.getElementById("captcha-sabio").value.trim(), 10);
+    const palabras = pregunta.split(/\s+/).filter(p => p);
+
+    if (!nombre || !telefonoUsuario || !pregunta || palabras.length > 50 || isNaN(captcha) || captcha !== captchaRespuestaSabio) {
+      alert("Por favor, completa correctamente todos los campos y no excedas las 50 palabras.");
       return false;
     }
 
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(email)) {
-      respuesta.textContent = "❌ Ingresa un correo electrónico válido.";
-      respuesta.style.color = "red";
+    if (!telefono || telefono.length !== 10 || isNaN(telefono)) {
+      alert("Error interno: el número del sabio no es válido.");
       return false;
     }
 
-    if (palabras.length > 50) {
-      respuesta.textContent = "❌ Máximo 50 palabras.";
-      respuesta.style.color = "red";
-      return false;
-    }
+    // 1. Enviar a WhatsApp
+    const mensaje = `Hola, ${sabio}. Soy ${nombre} (tel: ${telefonoUsuario}) y quiero preguntarte: ${pregunta}`;
+    const link = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
+    window.open(link, "_blank");
 
-    if (isNaN(captcha) || captcha !== captchaSumaConsulta) {
-      respuesta.textContent = "❌ Respuesta incorrecta en el captcha.";
-      respuesta.style.color = "red";
-      return false;
-    }
+    // 2. Enviar a Google Sheets
+    const url = "https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec";
+    const data = new FormData();
+    data.append("nombre", nombre);
+    data.append("telefono", telefonoUsuario);
+    data.append("pregunta", pregunta);
+    data.append("fecha", new Date().toLocaleDateString("en-CA"));
+    data.append("estatus", "pendiente");
+    data.append("sabio", sabio);
+    data.append("origen", "galeria");
 
-    if (!check) {
-      respuesta.textContent = "❌ Debes confirmar que no eres un robot.";
-      respuesta.style.color = "red";
-      return false;
-    }
+    fetch(url, {
+      method: "POST",
+      body: data
+    }).then(res => res.text()).then(console.log).catch(console.error);
 
-    if (!fecha) {
-      respuesta.textContent = "❌ Debes seleccionar una fecha.";
-      respuesta.style.color = "red";
-      return false;
-    }
-
-    respuesta.textContent = "✅ Tu consulta fue enviada con éxito.";
-    respuesta.style.color = "green";
-    contadorConsultas++;
-    document.getElementById("contadorNumero").textContent = contadorConsultas;
-
-    setTimeout(() => {
-      respuesta.textContent = "";
-      document.getElementById("consultaForm").reset();
-      document.getElementById("contadorPalabras").textContent = "0/50 palabras";
-      generarCaptchaConsulta();
-    }, 5000);
-
-    document.getElementById("consultaForm").submit();
+    cerrarFormularioSabio();
     return false;
   }
 
-  document.addEventListener("DOMContentLoaded", function () {
-    generarCaptchaConsulta();
-    document.getElementById("preguntaConsulta").addEventListener("input", function () {
-      const palabras = this.value.trim().split(/\s+/).filter(p => p.length > 0);
-      const contador = document.getElementById("contadorPalabras");
-      contador.textContent = `${palabras.length}/50 palabras`;
-      contador.style.color = palabras.length > 50 ? "red" : "#777";
-    });
+  document.addEventListener("DOMContentLoaded", () => {
+    cargarSabios();
+    document.getElementById("preguntaUsuario").addEventListener("input", actualizarContadorPalabras);
   });
 </script>
 <!-- SECCIÓN: TESTIMONIOS DE USUARIOS -->
@@ -782,7 +785,7 @@ CÓDIGO DE NUEVO INTENTO FINAL DE ADOPTA UN SABIO
   generarCaptcha();
 </script>
 <!-- SECCIÓN 8: Preguntas Frecuentes (FAQ) -->
-<section id="faq" style="padding: 40px 20px; background-color: #f9f9f9; font-family: 'Roboto', sans-serif;">
+<section id="faq" style="padding: 40px 20px; background-color: #f5f5f5; font-family: 'Roboto', sans-serif;">
   <div style="max-width: 900px; margin: auto; background: #fff; border-radius: 16px; padding: 30px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     <h2 style="text-align: center; font-size: 2em; margin-bottom: 20px;">Preguntas Frecuentes</h2>
 
@@ -975,7 +978,7 @@ function toggleAudio() {
 }
 </script>
 <!-- SECCIÓN: CONTÁCTANOS -->
-<section id="contacto" style="padding: 40px 20px; background-color: #fdfdfd; font-family: 'Segoe UI', sans-serif;">
+<section id="contacto" style="padding: 40px 20px; background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif;">
   <div style="max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
     <div style="text-align:center; margin-bottom: 20px;">
