@@ -982,18 +982,18 @@ function toggleAudio() {
   <div style="max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
     <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
     <div style="text-align:center; margin-bottom: 20px;">
-      <button onclick="toggleContacto()" id="btnToggleContacto" style="background-color: #8e44ad; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
+      <button onclick="toggleFormularioContacto()" id="btnToggleContacto" style="background-color: #8e44ad; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
         Mostrar formulario
       </button>
     </div>
 
-    <div id="formularioContacto" style="display: none; max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-      <form id="contactoForm" onsubmit="enviarContacto(event)" novalidate>
+    <div id="formularioContactoContenedor" style="display: none; max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+      <form id="formularioContacto" onsubmit="enviarFormularioContacto(event)" novalidate>
         <label style="font-weight: bold;">Nombre:</label>
         <input type="text" name="nombre" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
 
         <label style="font-weight: bold;">Teléfono (10 dígitos):</label>
-        <input type="tel" id="telefono" name="telefono" required placeholder="Ej. 9991234567" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
+        <input type="tel" id="telefonoContacto" name="telefono" required placeholder="Ej. 9991234567" style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
 
         <label style="font-weight: bold;">Email:</label>
         <input type="email" name="email" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
@@ -1002,16 +1002,16 @@ function toggleAudio() {
         <input type="date" name="fecha" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
 
         <label style="font-weight: bold;">Mensaje (máx. 100 caracteres):</label>
-        <textarea id="mensaje" name="mensaje" maxlength="100" required placeholder="Tu mensaje breve..." style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
+        <textarea id="mensajeContacto" name="mensaje" maxlength="100" required placeholder="Tu mensaje breve..." style="width: 100%; padding: 10px; margin-bottom: 5px; border: 1px solid #ccc; border-radius: 8px;"></textarea>
         <div style="text-align: right; font-size: 12px; color: #666; margin-bottom: 15px;">
-          <span id="contadorMensaje">0</span>/100 caracteres
+          <span id="contadorMensajeContacto">0</span>/100 caracteres
         </div>
 
         <!-- CAPTCHA -->
         <div id="captchaContacto" style="margin-bottom: 15px;">
-          <label style="font-weight: bold;"><span id="captchaPregunta"></span></label>
-          <input type="number" id="captchaRespuesta" required placeholder="Respuesta" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px;">
-          <span id="captchaCheck" style="color: green; font-size: 20px; display: none;">✔</span>
+          <label style="font-weight: bold;"><span id="captchaPreguntaContacto"></span></label>
+          <input type="number" id="captchaRespuestaContacto" required placeholder="Respuesta" style="width: 100%; padding: 10px; margin-top: 5px; border: 1px solid #ccc; border-radius: 8px;">
+          <span id="captchaCheckContacto" style="color: green; font-size: 20px; display: none;">✔</span>
         </div>
 
         <button type="submit" style="background-color: #8e44ad; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
@@ -1024,8 +1024,8 @@ function toggleAudio() {
 
 <!-- SCRIPT: FUNCIONALIDAD CONTÁCTANOS -->
 <script>
-  function toggleContacto() {
-    const form = document.getElementById("formularioContacto");
+  function toggleFormularioContacto() {
+    const form = document.getElementById("formularioContactoContenedor");
     const btn = document.getElementById("btnToggleContacto");
     if (form.style.display === "none") {
       form.style.display = "block";
@@ -1038,35 +1038,35 @@ function toggleAudio() {
     }
   }
 
-  let captchaResultado;
-  function generarCaptcha() {
+  let captchaResultadoContacto;
+  function generarCaptchaContacto() {
     const n1 = Math.floor(Math.random() * 9) + 1;
     const n2 = Math.floor(Math.random() * 9) + 1;
-    captchaResultado = n1 + n2;
-    document.getElementById("captchaPregunta").textContent = `¿Cuánto es ${n1} + ${n2}?`;
-    document.getElementById("captchaRespuesta").value = '';
-    document.getElementById("captchaCheck").style.display = 'none';
+    captchaResultadoContacto = n1 + n2;
+    document.getElementById("captchaPreguntaContacto").textContent = `¿Cuánto es ${n1} + ${n2}?`;
+    document.getElementById("captchaRespuestaContacto").value = '';
+    document.getElementById("captchaCheckContacto").style.display = 'none';
   }
 
-  document.getElementById("captchaRespuesta").addEventListener("input", function () {
-    const check = document.getElementById("captchaCheck");
-    if (parseInt(this.value) === captchaResultado) {
+  document.getElementById("captchaRespuestaContacto").addEventListener("input", function () {
+    const check = document.getElementById("captchaCheckContacto");
+    if (parseInt(this.value) === captchaResultadoContacto) {
       check.style.display = 'inline';
     } else {
       check.style.display = 'none';
     }
   });
 
-  document.getElementById("mensaje").addEventListener("input", function () {
-    document.getElementById("contadorMensaje").textContent = this.value.length;
+  document.getElementById("mensajeContacto").addEventListener("input", function () {
+    document.getElementById("contadorMensajeContacto").textContent = this.value.length;
   });
 
-  window.addEventListener("DOMContentLoaded", generarCaptcha);
+  window.addEventListener("DOMContentLoaded", generarCaptchaContacto);
 
-  function enviarContacto(e) {
+  function enviarFormularioContacto(e) {
     e.preventDefault();
 
-    const telefonoInput = document.getElementById("telefono");
+    const telefonoInput = document.getElementById("telefonoContacto");
     const telefono = telefonoInput.value.trim();
     const telefonoValido = /^\d{10}$/.test(telefono);
     if (!telefonoValido) {
@@ -1075,13 +1075,13 @@ function toggleAudio() {
       return;
     }
 
-    const captchaInput = parseInt(document.getElementById("captchaRespuesta").value);
-    if (captchaInput !== captchaResultado) {
+    const captchaInput = parseInt(document.getElementById("captchaRespuestaContacto").value);
+    if (captchaInput !== captchaResultadoContacto) {
       alert("Captcha incorrecto.");
       return;
     }
 
-    const form = document.getElementById("contactoForm");
+    const form = document.getElementById("formularioContacto");
     const data = new FormData(form);
     data.append("tipo", "contacto");
 
@@ -1098,9 +1098,9 @@ function toggleAudio() {
       window.open(`https://wa.me/5219991832064?text=${mensaje}`, '_blank');
 
       form.reset();
-      document.getElementById("contadorMensaje").textContent = "0";
-      generarCaptcha();
-      document.getElementById("captchaCheck").style.display = "none";
+      document.getElementById("contadorMensajeContacto").textContent = "0";
+      generarCaptchaContacto();
+      document.getElementById("captchaCheckContacto").style.display = "none";
     })
     .catch(err => {
       alert("Error al enviar el formulario. Intenta de nuevo.");
