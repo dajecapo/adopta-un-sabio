@@ -344,178 +344,138 @@ body {
     document.getElementById("preguntaUsuario").addEventListener("input", actualizarContadorPalabras);
   });
 </script>
-<!-- SECCIÓN: TESTIMONIOS DE USUARIOS -->
-<style>
-  .oculto { display: none; }
-  .titulo-seccion {
-    text-align: center;
-    font-size: 1.8em;
-    margin-bottom: 1em;
-  }
-  .carrusel-contenedor {
-    position: relative;
-    max-width: 600px;
-    margin: auto;
-    overflow: hidden;
-  }
-  .carrusel {
-    display: flex;
-    flex-direction: column;
-  }
-  .testimonio-slide {
-    display: none;
-    padding: 1.5em;
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    text-align: center;
-  }
-  .testimonio-slide.activo {
-    display: block;
-  }
-  .carrusel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: #8e44ad;
-    border: none;
-    color: white;
-    padding: 0.5em 1em;
-    cursor: pointer;
-    font-size: 1.5em;
-    border-radius: 50%;
-    z-index: 10;
-  }
-  .carrusel-btn.izquierda { left: -15px; }
-  .carrusel-btn.derecha { right: -15px; }
-  .button-toggle {
-    background-color: #8e44ad;
-    color: white;
-    border: none;
-    padding: 0.6em 1.2em;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1em;
-    transition: background 0.3s;
-  }
-  .button-toggle.activo {
-    background-color: #d32f2f;
-  }
-</style>
+<!-- SECCIÓN: TESTIMONIOS DE USUARIOS FUNCIONAL Y RESPONSIVA -->
+<section class="section" id="testimonios" style="max-width: 900px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: 'Segoe UI', sans-serif;">
+  <h2 class="titulo-seccion" style="text-align: center; font-size: 1.8em; color: #6a1b9a;">Testimonios de usuarios</h2>
 
-<section class="section" id="testimonios" style="max-width: 900px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-  <h2 class="titulo-seccion">Testimonios de usuarios</h2>
-
-  <div class="carrusel-contenedor">
-    <button class="carrusel-btn izquierda" onclick="cambiarSlide(-1)">&#10094;</button>
-    <div class="carrusel" id="carrusel-testimonios"></div>
-    <button class="carrusel-btn derecha" onclick="cambiarSlide(1)">&#10095;</button>
+  <div style="text-align: center; margin-bottom: 1em;">
+    <button id="toggleTestimonios" class="button-toggle" onclick="toggleTestimoniosSeccion()" style="background-color: #6a1b9a; color: white; border: none; padding: 0.6em 1.2em; border-radius: 8px; font-size: 1em; cursor: pointer;">Ver testimonios</button>
   </div>
 
-  <div style="text-align: center; margin-top: 2em;">
-    <button class="button-toggle" id="toggleFormularioBtn" onclick="toggleFormularioTestimonio()">Deja aquí tu testimonio</button>
-  </div>
+  <div id="contenidoTestimonios" style="display: none; animation: fadeIn 0.3s ease-in-out;">
+    <div class="carrusel-contenedor" style="position: relative; max-width: 600px; margin: auto; overflow: hidden; min-height: 150px; padding: 0 2em; box-sizing: border-box;">
+      <button class="carrusel-btn izquierda" onclick="cambiarSlide(-1)" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: #8e44ad; border: none; color: white; padding: 0.5em 1em; font-size: 1.5em; border-radius: 50%; z-index: 2;">&#10094;</button>
+      <div id="carrusel-testimonios" class="carrusel" style="position: relative; min-height: 120px;">
+        <!-- Los testimonios se insertan dinámicamente aquí -->
+      </div>
+      <button class="carrusel-btn derecha" onclick="cambiarSlide(1)" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); background: #8e44ad; border: none; color: white; padding: 0.5em 1em; font-size: 1.5em; border-radius: 50%; z-index: 2;">&#10095;</button>
+    </div>
 
-  <div id="formulario-testimonio" class="oculto" style="margin-top: 2em;">
-    <form id="testimonioForm" style="max-width: 600px; margin: auto; background: #fff; padding: 1.5em; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1);">
-      <div style="margin-bottom: 1em;">
-        <label for="nombre"><strong>Nombre:</strong></label>
-        <input type="text" id="nombre" name="nombre" maxlength="50" required style="width: 100%; padding: 0.5em;">
-      </div>
-      <div style="margin-bottom: 1em;">
-        <label for="testimonio"><strong>Testimonio (máx. 92 caracteres):</strong></label>
-        <input type="text" id="testimonio" name="testimonio" maxlength="92" required style="width: 100%; padding: 0.5em;">
-        <small id="contador">92 caracteres restantes</small>
-      </div>
-      <div style="margin-bottom: 1em;">
-        <label for="fecha"><strong>Fecha:</strong></label>
-        <input type="date" id="fecha" name="fecha" required style="width: 100%; padding: 0.5em;">
-      </div>
-      <div style="margin-bottom: 1em;">
-        <label><strong>¿Eres humano? Resuelve:</strong></label><br>
-        <span id="captcha-operacion-testimonio"></span>
-        <input type="number" id="captcha-respuesta-testimonio" required style="width: 100%; padding: 0.5em; margin-top: 0.3em;">
-        <span id="captcha-validado-testimonio" style="display: none; color: green; font-weight: bold;">✓ Verificado</span>
-      </div>
-      <button type="submit" class="button-toggle" style="margin-top: 1em;">Enviar testimonio</button>
-    </form>
+    <div style="text-align: center; margin-top: 2em;">
+      <button class="button-toggle" id="toggleFormularioBtn" onclick="toggleFormularioTestimonio()" style="background-color: #6a1b9a; color: white; border: none; padding: 0.6em 1.2em; border-radius: 8px; font-size: 1em; cursor: pointer;">Deja aquí tu testimonio</button>
+    </div>
+
+    <div id="formulario-testimonio" style="display: none; margin-top: 2em;">
+      <form id="testimonioForm" style="max-width: 600px; margin: auto; background: #fff; padding: 1.5em; border-radius: 12px; box-shadow: 0 3px 6px rgba(0,0,0,0.1);">
+        <div style="margin-bottom: 1em;">
+          <label for="nombre"><strong>Nombre:</strong></label>
+          <input type="text" id="nombre" name="nombre" maxlength="50" required style="width: 100%; padding: 0.5em;">
+        </div>
+        <div style="margin-bottom: 1em;">
+          <label for="testimonio"><strong>Testimonio (máx. 92 caracteres):</strong></label>
+          <input type="text" id="testimonio" name="testimonio" maxlength="92" required style="width: 100%; padding: 0.5em;">
+          <small id="contador">92 caracteres restantes</small>
+        </div>
+        <div style="margin-bottom: 1em;">
+          <label for="fecha"><strong>Fecha:</strong></label>
+          <input type="date" id="fecha" name="fecha" required style="width: 100%; padding: 0.5em;">
+        </div>
+        <div style="margin-bottom: 1em;">
+          <label><strong>¿Eres humano? Resuelve:</strong></label><br>
+          <span id="captcha-operacion-testimonio"></span>
+          <input type="number" id="captcha-respuesta-testimonio" required style="width: 100%; padding: 0.5em; margin-top: 0.3em;">
+          <span id="captcha-validado-testimonio" style="display: none; color: green; font-weight: bold;">✓ Verificado</span>
+        </div>
+        <div style="text-align: center;">
+          <button type="submit" class="button-toggle" style="margin-top: 1em; background: linear-gradient(to right, #6a1b9a, #8e44ad); color: white; font-size: 1em; padding: 0.7em 2em; border: none; border-radius: 30px; box-shadow: 0 3px 6px rgba(0,0,0,0.2); cursor: pointer; transition: background 0.3s ease;">Enviar testimonio</button>
+        </div>
+      </form>
+    </div>
   </div>
 </section>
 
 <script>
-(function () {
-  let captchaTestimonio = 0;
+function toggleTestimoniosSeccion() {
+  const seccion = document.getElementById("contenidoTestimonios");
+  const btn = document.getElementById("toggleTestimonios");
+  const visible = seccion.style.display === "block";
+  seccion.style.display = visible ? "none" : "block";
+  btn.textContent = visible ? "Ver testimonios" : "Cerrar";
+  btn.style.backgroundColor = visible ? "#6a1b9a" : "#d32f2f";
+  if (!visible && document.querySelectorAll('.testimonio-slide').length === 0) cargarTestimonios();
+}
 
-  function generarCaptchaTestimonio() {
-    const a = Math.floor(Math.random() * 9) + 1;
-    const b = Math.floor(Math.random() * 9) + 1;
-    captchaTestimonio = a + b;
-    document.getElementById("captcha-operacion-testimonio").textContent = `${a} + ${b} =`;
-    document.getElementById("captcha-respuesta-testimonio").value = "";
-    document.getElementById("captcha-validado-testimonio").style.display = "none";
-  }
+function toggleFormularioTestimonio() {
+  const form = document.getElementById("formulario-testimonio");
+  const toggleBtn = document.getElementById("toggleFormularioBtn");
+  const visible = form.style.display === "block";
+  form.style.display = visible ? "none" : "block";
+  toggleBtn.textContent = visible ? "Deja aquí tu testimonio" : "Cerrar formulario";
+  toggleBtn.style.backgroundColor = visible ? "#6a1b9a" : "#d32f2f";
+  if (!visible) generarCaptchaTestimonio();
+}
 
-  function toggleFormularioTestimonio() {
-    const form = document.getElementById("formulario-testimonio");
-    const toggleBtn = document.getElementById("toggleFormularioBtn");
-    form.classList.toggle("oculto");
-    toggleBtn.classList.toggle("activo");
-    toggleBtn.textContent = form.classList.contains("oculto") ? "Deja aquí tu testimonio" : "Cerrar formulario";
-    if (!form.classList.contains("oculto")) {
-      generarCaptchaTestimonio();
-      actualizarContadorTestimonio();
-    }
-  }
-
-  function actualizarContadorTestimonio() {
-    const input = document.getElementById("testimonio");
-    const contador = document.getElementById("contador");
-    const restante = 92 - input.value.length;
-    contador.textContent = `${restante} caracteres restantes`;
-  }
-
-  function cambiarSlide(direccion) {
-    const slides = document.querySelectorAll('.testimonio-slide');
-    let indice = Array.from(slides).findIndex(slide => slide.classList.contains('activo'));
-    if (indice === -1) return;
-    slides[indice].classList.remove('activo');
-    indice = (indice + direccion + slides.length) % slides.length;
-    slides[indice].classList.add('activo');
-  }
-
-  function cargarTestimonios() {
-    fetch("https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec?tipo=testimonios")
-      .then(res => res.json())
-      .then(datos => {
-        const carrusel = document.getElementById("carrusel-testimonios");
-        carrusel.innerHTML = "";
-        datos.slice(1).forEach(row => {
-          const nombre = row[0]?.trim();
-          const testimonio = row[1]?.trim();
-          const estatus = row[4]?.trim().toLowerCase();
-          if (estatus === "aprobado") {
-            const div = document.createElement("div");
-            div.className = "testimonio-slide";
-            div.innerHTML = `<strong>${nombre}</strong><p>"${testimonio}"</p>`;
-            carrusel.appendChild(div);
-          }
-        });
-        const slides = document.querySelectorAll('.testimonio-slide');
-        if (slides.length > 0) {
-          slides[0].classList.add("activo");
+function cargarTestimonios() {
+  fetch("https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec?tipo=testimonios")
+    .then(res => res.json())
+    .then(datos => {
+      const carrusel = document.getElementById("carrusel-testimonios");
+      carrusel.innerHTML = "";
+      datos.slice(1).forEach(row => {
+        const nombre = row[0]?.trim();
+        const testimonio = row[1]?.trim();
+        const estatus = row[4]?.trim().toLowerCase();
+        if (estatus === "aprobado") {
+          const div = document.createElement("div");
+          div.className = "testimonio-slide";
+          div.style.display = "none";
+          div.style.textAlign = "center";
+          div.style.padding = "1.2em";
+          div.style.borderRadius = "10px";
+          div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
+          div.style.background = "#f9f9f9";
+          div.style.minHeight = "100px";
+          div.style.overflowWrap = "break-word";
+          div.innerHTML = `<strong>${nombre}</strong><p style='margin-top: 0.5em;'>"${testimonio}"</p>`;
+          carrusel.appendChild(div);
         }
-      })
-      .catch(error => {
-        console.error("Error al cargar testimonios:", error);
       });
-  }
+      const slides = document.querySelectorAll('.testimonio-slide');
+      if (slides.length > 0) slides[0].style.display = "block";
+    })
+    .catch(error => console.error("Error al cargar testimonios:", error));
+}
 
+function cambiarSlide(direccion) {
+  const slides = document.querySelectorAll('.testimonio-slide');
+  let actual = Array.from(slides).findIndex(s => s.style.display === "block");
+  if (actual === -1) return;
+  slides[actual].style.display = "none";
+  let nuevo = (actual + direccion + slides.length) % slides.length;
+  slides[nuevo].style.display = "block";
+}
+
+function generarCaptchaTestimonio() {
+  const a = Math.floor(Math.random() * 9) + 1;
+  const b = Math.floor(Math.random() * 9) + 1;
+  captchaTestimonio = a + b;
+  document.getElementById("captcha-operacion-testimonio").textContent = `${a} + ${b} =`;
+  document.getElementById("captcha-respuesta-testimonio").value = "";
+  document.getElementById("captcha-validado-testimonio").style.display = "none";
+}
+
+let captchaTestimonio = 0;
+
+window.addEventListener("DOMContentLoaded", () => {
   document.getElementById("captcha-respuesta-testimonio").addEventListener("input", () => {
-    const respuesta = parseInt(document.getElementById("captcha-respuesta-testimonio").value);
-    document.getElementById("captcha-validado-testimonio").style.display = (respuesta === captchaTestimonio) ? "inline" : "none";
+    const r = parseInt(document.getElementById("captcha-respuesta-testimonio").value);
+    document.getElementById("captcha-validado-testimonio").style.display = (r === captchaTestimonio) ? "inline" : "none";
   });
 
-  document.getElementById("testimonio").addEventListener("input", actualizarContadorTestimonio);
+  document.getElementById("testimonio").addEventListener("input", () => {
+    const restante = 92 - document.getElementById("testimonio").value.length;
+    document.getElementById("contador").textContent = `${restante} caracteres restantes`;
+  });
 
   document.getElementById("testimonioForm").addEventListener("submit", function (e) {
     e.preventDefault();
@@ -546,8 +506,6 @@ body {
           alert("¡Gracias por tu testimonio!");
           document.getElementById("testimonioForm").reset();
           document.getElementById("captcha-validado-testimonio").style.display = "none";
-          generarCaptchaTestimonio();
-          actualizarContadorTestimonio();
           cargarTestimonios();
         } else {
           alert("Error al enviar. Intenta de nuevo.");
@@ -558,18 +516,7 @@ body {
         console.error(err);
       });
   });
-
-  window.addEventListener("DOMContentLoaded", () => {
-    generarCaptchaTestimonio();
-    actualizarContadorTestimonio();
-    cargarTestimonios();
-  });
-
-  // 🌍 Exponer funciones globales para HTML
-  window.toggleFormularioTestimonio = toggleFormularioTestimonio;
-  window.cambiarSlide = cambiarSlide;
-
-})();
+});
 </script>
 
 <!-- SECCIÓN: ¿TIENES ALGO QUE APORTAR? ¡SÚMATE! -->
