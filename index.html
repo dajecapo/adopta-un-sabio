@@ -1055,7 +1055,91 @@ function toggleAudio() {
     });
   }
 </script>
+<script>
+  function toggleFormularioContacto() {
+    const form = document.getElementById("formularioContactoContenedor");
+    const btn = document.getElementById("btnToggleContacto");
+    if (form.style.display === "none") {
+      form.style.display = "block";
+      btn.textContent = "Cerrar formulario";
+      btn.style.backgroundColor = "#c0392b";
+    } else {
+      form.style.display = "none";
+      btn.textContent = "Mostrar formulario";
+      btn.style.backgroundColor = "#6a1b9a";
+    }
+  }
 
+  let captchaResultadoContacto;
+  function generarCaptchaContacto() {
+    const n1 = Math.floor(Math.random() * 9) + 1;
+    const n2 = Math.floor(Math.random() * 9) + 1;
+    captchaResultadoContacto = n1 + n2;
+    document.getElementById("captchaPreguntaContacto").textContent = `¿Cuánto es ${n1} + ${n2}?`;
+    document.getElementById("captchaRespuestaContacto").value = '';
+    document.getElementById("captchaCheckContacto").style.display = 'none';
+  }
+
+  document.getElementById("captchaRespuestaContacto").addEventListener("input", function () {
+    const check = document.getElementById("captchaCheckContacto");
+    if (parseInt(this.value) === captchaResultadoContacto) {
+      check.style.display = 'inline';
+    } else {
+      check.style.display = 'none';
+    }
+  });
+
+  document.getElementById("mensajeContacto").addEventListener("input", function () {
+    document.getElementById("contadorMensajeContacto").textContent = this.value.length;
+  });
+
+  window.addEventListener("DOMContentLoaded", generarCaptchaContacto);
+
+  function enviarFormularioContacto(e) {
+    e.preventDefault();
+
+    const telefonoInput = document.getElementById("telefonoContacto");
+    const telefono = telefonoInput.value.trim();
+    const telefonoValido = /^\\d{10}$/.test(telefono);
+    if (!telefonoValido) {
+      alert("El teléfono debe tener exactamente 10 dígitos numéricos.");
+      telefonoInput.focus();
+      return;
+    }
+
+    const captchaInput = parseInt(document.getElementById("captchaRespuestaContacto").value);
+    if (captchaInput !== captchaResultadoContacto) {
+      alert("Captcha incorrecto.");
+      return;
+    }
+
+    const form = document.getElementById("formularioContacto");
+    const data = new FormData(form);
+    data.append("tipo", "contacto");
+
+    fetch("https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec", {
+      method: "POST",
+      body: data
+    })
+    .then(response => response.text())
+    .then(res => {
+      alert("Formulario enviado correctamente.");
+      const nombre = data.get("nombre");
+      const telefono = data.get("telefono");
+      const mensaje = encodeURIComponent(`¡Hola! Soy ${nombre}. Acabo de llenar el formulario de contacto. Mi número es ${telefono}.`);
+      window.open(`https://wa.me/5219991832064?text=${mensaje}`, '_blank');
+
+      form.reset();
+      document.getElementById("contadorMensajeContacto").textContent = "0";
+      generarCaptchaContacto();
+      document.getElementById("captchaCheckContacto").style.display = "none";
+    })
+    .catch(err => {
+      alert("Error al enviar el formulario. Intenta de nuevo.");
+      console.error(err);
+    });
+  }
+</script>
 <!-- SECCIÓN: MÚSICA DEL SITIO -->
 <section id="musica" style="padding: 40px; background-color: #f8f8f8; font-family: 'Segoe UI', sans-serif;">
   <div style="max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
