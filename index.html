@@ -722,12 +722,12 @@ window.addEventListener("DOMContentLoaded", () => {
   generarCaptcha();
 </script>
 <!-- SECCIÓN 8: Preguntas Frecuentes (FAQ) -->
-<section id="faq" style="padding: 0 20px 40px 20px; background-color: #f5f5f5; font-family: 'Roboto', sans-serif;">
-  <div style="max-width: 900px; margin: 2rem auto 1rem auto; background: #fff; border-radius: 15px; padding: 2rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
-    <h2 style="text-align: center; font-size: 2em; margin-bottom: 20px; color: #4a148c;">Preguntas Frecuentes</h2>
+<section id="faq" style="padding: 0 20px 20px 20px; background-color: #f5f5f5; font-family: 'Roboto', sans-serif;">
+  <div style="max-width: 900px; margin: 1rem auto; background: #fff; border-radius: 15px; padding: 1.5rem; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <h2 style="text-align: center; font-size: 2em; margin-bottom: 1em; color: #4a148c;">Preguntas Frecuentes</h2>
 
-    <div style="text-align: center; margin-bottom: 20px;">
-      <button id="toggleFaq" onclick="toggleFaq()" style="padding: 0.6em 1.2em; font-size: 1em; border: none; background-color: #6a1b9a; color: white; border-radius: 8px; cursor: pointer; transition: background-color 0.3s; min-width: 180px;">
+    <div style="text-align: center; margin-bottom: 1.5em;">
+      <button id="toggleFaq" onclick="toggleFaq()" style="padding: 0.6em 1.2em; font-size: 1em; border: none; background-color: #6a1b9a; color: white; border-radius: 8px; cursor: pointer; transition: background-color 0.3s; min-width: 180px; width: 100%; max-width: 250px;">
         Ver respuestas
       </button>
     </div>
@@ -787,6 +787,20 @@ window.addEventListener("DOMContentLoaded", () => {
     font-size: 0.95em;
     color: #333;
     background-color: #ffffff;
+  }
+
+  @media screen and (max-width: 600px) {
+    #faq .question {
+      font-size: 1em;
+    }
+    #faq button {
+      font-size: 1em;
+      width: 100%;
+      max-width: 250px;
+    }
+    #faq .faq-item {
+      font-size: 0.95em;
+    }
   }
 </style>
 
