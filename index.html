@@ -353,11 +353,12 @@ body {
   </div>
 
   <div id="contenidoTestimonios" style="display: none; animation: fadeIn 0.3s ease-in-out;">
-    <div class="carrusel-contenedor" style="position: relative; max-width: 600px; margin: auto; overflow: hidden; min-height: 150px; padding: 0 2.5em; box-sizing: border-box;">
-      <button class="carrusel-btn izquierda" onclick="cambiarSlide(-1)" style="
+    <div class="carrusel-contenedor" style="position: relative; max-width: 600px; margin: auto; overflow: hidden; min-height: 160px; padding: 0 2.5em; box-sizing: border-box;">
+      <!-- Flecha izquierda -->
+      <button onclick="cambiarSlide(-1)" style="
         position: absolute;
         top: 50%;
-        left: 0;
+        left: 10px;
         transform: translateY(-50%);
         background: #8e44ad;
         border: none;
@@ -366,21 +367,31 @@ body {
         height: 40px;
         font-size: 1.5em;
         border-radius: 50%;
-        z-index: 9999;
+        z-index: 999;
         display: flex;
         justify-content: center;
         align-items: center;
         box-shadow: 0 2px 6px rgba(0,0,0,0.2);
       ">&#10094;</button>
 
-      <div id="carrusel-testimonios" class="carrusel" style="position: relative; min-height: 120px;">
-        <!-- Testimonios dinámicos -->
+      <!-- Carrusel dinámico -->
+      <div id="carrusel-testimonios" style="
+        text-align: center;
+        min-height: 100px;
+        padding: 1em;
+        border-radius: 12px;
+        background: #f9f9f9;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        overflow-wrap: break-word;
+      ">
+        <!-- Se llena dinámicamente -->
       </div>
 
-      <button class="carrusel-btn derecha" onclick="cambiarSlide(1)" style="
+      <!-- Flecha derecha -->
+      <button onclick="cambiarSlide(1)" style="
         position: absolute;
         top: 50%;
-        right: 0;
+        right: 10px;
         transform: translateY(-50%);
         background: #8e44ad;
         border: none;
@@ -389,7 +400,7 @@ body {
         height: 40px;
         font-size: 1.5em;
         border-radius: 50%;
-        z-index: 9999;
+        z-index: 999;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -465,13 +476,6 @@ function cargarTestimonios() {
           const div = document.createElement("div");
           div.className = "testimonio-slide";
           div.style.display = "none";
-          div.style.textAlign = "center";
-          div.style.padding = "1.2em";
-          div.style.borderRadius = "10px";
-          div.style.boxShadow = "0 2px 6px rgba(0,0,0,0.1)";
-          div.style.background = "#f9f9f9";
-          div.style.minHeight = "100px";
-          div.style.overflowWrap = "break-word";
           div.innerHTML = `<strong>${nombre}</strong><p style='margin-top: 0.5em;'>\"${testimonio}\"</p>`;
           carrusel.appendChild(div);
         }
