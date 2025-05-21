@@ -354,11 +354,11 @@ body {
 
   <div id="contenidoTestimonios" style="display: none; animation: fadeIn 0.3s ease-in-out;">
     <div class="carrusel-contenedor" style="position: relative; max-width: 600px; margin: auto; overflow: hidden; min-height: 150px; padding: 0 2em; box-sizing: border-box;">
-      <button class="carrusel-btn izquierda" onclick="cambiarSlide(-1)" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: #8e44ad; border: none; color: white; padding: 0.5em 1em; font-size: 1.5em; border-radius: 50%; z-index: 2;">&#10094;</button>
+      <button class="carrusel-btn izquierda" onclick="cambiarSlide(-1)" style="position: absolute; top: 50%; left: 0; transform: translateY(-50%); background: #8e44ad; border: none; color: white; width: 40px; height: 40px; font-size: 1.5em; border-radius: 50%; z-index: 10; display: flex; justify-content: center; align-items: center;">&#10094;</button>
       <div id="carrusel-testimonios" class="carrusel" style="position: relative; min-height: 120px;">
         <!-- Los testimonios se insertan dinámicamente aquí -->
       </div>
-      <button class="carrusel-btn derecha" onclick="cambiarSlide(1)" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); background: #8e44ad; border: none; color: white; padding: 0.5em 1em; font-size: 1.5em; border-radius: 50%; z-index: 2;">&#10095;</button>
+      <button class="carrusel-btn derecha" onclick="cambiarSlide(1)" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); background: #8e44ad; border: none; color: white; width: 40px; height: 40px; font-size: 1.5em; border-radius: 50%; z-index: 10; display: flex; justify-content: center; align-items: center;">&#10095;</button>
     </div>
 
     <div style="text-align: center; margin-top: 2em;">
@@ -436,6 +436,7 @@ function cargarTestimonios() {
           div.style.background = "#f9f9f9";
           div.style.minHeight = "100px";
           div.style.overflowWrap = "break-word";
+          div.style.margin = "0 1.5em";
           div.innerHTML = `<strong>${nombre}</strong><p style='margin-top: 0.5em;'>"${testimonio}"</p>`;
           carrusel.appendChild(div);
         }
