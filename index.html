@@ -967,17 +967,18 @@ function toggleAudio() {
   }
 }
 </script>
+
 <!-- SECCIÓN: CONTÁCTANOS -->
 <section id="contacto" style="padding: 40px 20px; background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif;">
-  <div style="max-width: 900px; margin: auto; background: white; padding: 40px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+  <div class="contenedor-contacto">
     <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
     <div style="text-align:center; margin-bottom: 20px;">
-      <button onclick="toggleFormularioContacto()" id="btnToggleContacto" style="background-color: #8e44ad; color: white; border: none; padding: 10px 20px; font-size: 16px; border-radius: 8px; cursor: pointer;">
+      <button onclick="toggleFormularioContacto()" id="btnToggleContacto" class="boton-estandar">
         Mostrar formulario
       </button>
     </div>
 
-    <div id="formularioContactoContenedor" style="display: none; max-width: 600px; margin: auto; background: #fff; padding: 30px; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
+    <div id="formularioContactoContenedor" class="formulario-contacto">
       <form id="formularioContacto" onsubmit="enviarFormularioContacto(event)" novalidate>
         <label style="font-weight: bold;">Nombre:</label>
         <input type="text" name="nombre" required style="width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 8px;">
@@ -1012,92 +1013,62 @@ function toggleAudio() {
   </div>
 </section>
 
-<!-- SCRIPT: FUNCIONALIDAD CONTÁCTANOS -->
-<script>
-  function toggleFormularioContacto() {
-    const form = document.getElementById("formularioContactoContenedor");
-    const btn = document.getElementById("btnToggleContacto");
-    if (form.style.display === "none") {
-      form.style.display = "block";
-      btn.textContent = "Cerrar formulario";
-      btn.style.backgroundColor = "#c0392b";
-    } else {
-      form.style.display = "none";
-      btn.textContent = "Mostrar formulario";
-      btn.style.backgroundColor = "#8e44ad";
-    }
+<!-- ESTILOS UNIFICADOS -->
+<style>
+  .contenedor-contacto {
+    max-width: 900px;
+    margin: 2rem auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
-  let captchaResultadoContacto;
-  function generarCaptchaContacto() {
-    const n1 = Math.floor(Math.random() * 9) + 1;
-    const n2 = Math.floor(Math.random() * 9) + 1;
-    captchaResultadoContacto = n1 + n2;
-    document.getElementById("captchaPreguntaContacto").textContent = `¿Cuánto es ${n1} + ${n2}?`;
-    document.getElementById("captchaRespuestaContacto").value = '';
-    document.getElementById("captchaCheckContacto").style.display = 'none';
+  .formulario-contacto {
+    display: none;
+    max-width: 600px;
+    margin: 2rem auto 0 auto;
+    background: white;
+    padding: 2rem;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   }
 
-  document.getElementById("captchaRespuestaContacto").addEventListener("input", function () {
-    const check = document.getElementById("captchaCheckContacto");
-    if (parseInt(this.value) === captchaResultadoContacto) {
-      check.style.display = 'inline';
-    } else {
-      check.style.display = 'none';
-    }
-  });
-
-  document.getElementById("mensajeContacto").addEventListener("input", function () {
-    document.getElementById("contadorMensajeContacto").textContent = this.value.length;
-  });
-
-  window.addEventListener("DOMContentLoaded", generarCaptchaContacto);
-
-  function enviarFormularioContacto(e) {
-    e.preventDefault();
-
-    const telefonoInput = document.getElementById("telefonoContacto");
-    const telefono = telefonoInput.value.trim();
-    const telefonoValido = /^\d{10}$/.test(telefono);
-    if (!telefonoValido) {
-      alert("El teléfono debe tener exactamente 10 dígitos numéricos.");
-      telefonoInput.focus();
-      return;
-    }
-
-    const captchaInput = parseInt(document.getElementById("captchaRespuestaContacto").value);
-    if (captchaInput !== captchaResultadoContacto) {
-      alert("Captcha incorrecto.");
-      return;
-    }
-
-    const form = document.getElementById("formularioContacto");
-    const data = new FormData(form);
-    data.append("tipo", "contacto");
-
-    fetch("https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec", {
-      method: "POST",
-      body: data
-    })
-    .then(response => response.text())
-    .then(res => {
-      alert("Formulario enviado correctamente.");
-      const nombre = data.get("nombre");
-      const telefono = data.get("telefono");
-      const mensaje = encodeURIComponent(`¡Hola! Soy ${nombre}. Acabo de llenar el formulario de contacto. Mi número es ${telefono}.`);
-      window.open(`https://wa.me/5219991832064?text=${mensaje}`, '_blank');
-
-      form.reset();
-      document.getElementById("contadorMensajeContacto").textContent = "0";
-      generarCaptchaContacto();
-      document.getElementById("captchaCheckContacto").style.display = "none";
-    })
-    .catch(err => {
-      alert("Error al enviar el formulario. Intenta de nuevo.");
-      console.error(err);
-    });
+  .boton-estandar {
+    width: 100%;
+    max-width: 320px;
+    font-size: 1.2rem;
+    padding: 12px 20px;
+    background-color: #8e44ad;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
   }
-</script>
+
+  .boton-estandar:hover {
+    background-color: #732d91;
+  }
+
+  @media screen and (max-width: 600px) {
+    .boton-estandar {
+      width: 100%;
+      max-width: 100%;
+    }
+
+    .contenedor-contacto {
+      margin: 2rem 1rem;
+      padding: 1.5rem;
+    }
+
+    .formulario-contacto {
+      margin: 1.5rem 0 0 0;
+      padding: 1.5rem;
+    }
+  }
+</style>
 <!-- SECCIÓN: MÚSICA DEL SITIO -->
 <section id="musica" style="padding: 40px; background-color: #f8f8f8; font-family: 'Segoe UI', sans-serif;">
   <div style="max-width: 900px; margin: auto; background: white; padding: 30px; border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.1);">
@@ -1234,4 +1205,3 @@ function toggleAudio() {
 
 </body>
 </html>
-
