@@ -1013,7 +1013,6 @@ function toggleAudio() {
   </div>
 </section>
 
-<!-- ESTILOS UNIFICADOS Y RESPONSIVOS -->
 <style>
   .contenedor-contacto {
     max-width: 900px;
@@ -1025,13 +1024,14 @@ function toggleAudio() {
   }
 
   .formulario-contacto {
+    display: none;
     margin-top: 2rem;
     padding: 2rem;
     background: white;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 600px;
+    max-width: 900px;
     margin-left: auto;
     margin-right: auto;
   }
@@ -1065,18 +1065,19 @@ function toggleAudio() {
       padding: 1.5rem;
       margin-left: 0;
       margin-right: 0;
+      width: 100%;
     }
 
     .boton-estandar {
       width: 100%;
       max-width: 100%;
       font-size: 1.2rem;
-      padding: 12px 20px;
+      padding: 14px 24px;
+      border-radius: 12px;
     }
   }
 </style>
 
-<!-- SCRIPT FUNCIONALIDAD CONTACTO -->
 <script>
   function toggleFormularioContacto() {
     const form = document.getElementById("formularioContactoContenedor");
