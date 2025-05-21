@@ -198,7 +198,7 @@ body {
 <section class="section" style="max-width: 900px; margin: auto; padding: 2em;">
   <h2 style="text-align:center; font-size: 2em; color: #4a148c;">Galería de Sabios</h2>
   <div style="text-align:center; margin-bottom:1em;">
-    <button onclick="toggleGaleria()" style="background-color:#8e44ad; color:white; border:none; padding:0.6em 1.2em; border-radius:8px; cursor:pointer; font-size:1em;">Mostrar sabios</button>
+    <button id="botonGaleria" onclick="toggleGaleria()" style="background-color:#6a1b9a; color:white; border:none; padding:0.6em 1.2em; border-radius:8px; cursor:pointer; font-size:1em; min-width: 180px;">Mostrar sabios</button>
   </div>
   <div id="contenedor-galeria" style="display:none;">
     <div id="sabios-aprobados" style="display: flex; flex-wrap: wrap; gap: 1em; justify-content: center;"></div>
@@ -233,10 +233,11 @@ body {
 
   function toggleGaleria() {
     const galeria = document.getElementById("contenedor-galeria");
-    const boton = event.target;
-    galeria.style.display = galeria.style.display === "none" ? "block" : "none";
-    boton.textContent = galeria.style.display === "none" ? "Mostrar sabios" : "Cerrar galería";
-    boton.style.backgroundColor = galeria.style.display === "none" ? "#8e44ad" : "#d32f2f";
+    const boton = document.getElementById("botonGaleria");
+    const visible = galeria.style.display === "block";
+    galeria.style.display = visible ? "none" : "block";
+    boton.textContent = visible ? "Mostrar sabios" : "Cerrar galería";
+    boton.style.backgroundColor = visible ? "#6a1b9a" : "#d32f2f";
   }
 
   function cargarSabios() {
@@ -254,7 +255,7 @@ body {
               <h4 style='color:#4a148c;'>${nombre}</h4>
               <p><strong>Edad:</strong> ${edad}</p>
               <p><strong>Área:</strong> ${area}</p>
-              <button style='background:#8e44ad; color:white; padding:0.5em 1em; border:none; border-radius:8px; cursor:pointer;' onclick="abrirFormularioSabio('${nombre}', '${telefono}')">Haz tu consulta</button>
+              <button style='background:#6a1b9a; color:white; padding:0.5em 1em; border:none; border-radius:8px; cursor:pointer;' onclick="abrirFormularioSabio('${nombre}', '${telefono}')">Haz tu consulta</button>
             `;
             contenedor.appendChild(card);
           }
@@ -314,12 +315,10 @@ body {
       return false;
     }
 
-    // 1. Enviar a WhatsApp
     const mensaje = `Hola, ${sabio}. Soy ${nombre} (tel: ${telefonoUsuario}) y quiero preguntarte: ${pregunta}`;
     const link = `https://wa.me/52${telefono}?text=${encodeURIComponent(mensaje)}`;
     window.open(link, "_blank");
 
-    // 2. Enviar a Google Sheets
     const url = "https://script.google.com/macros/s/AKfycbzb4ZvKX-6kpTni3cudJEs650tGoSEQNAPM9WuAhnXLcP0EJkpjvbmaI0u14Uqc6Za0/exec";
     const data = new FormData();
     data.append("nombre", nombre);
@@ -344,6 +343,7 @@ body {
     document.getElementById("preguntaUsuario").addEventListener("input", actualizarContadorPalabras);
   });
 </script>
+
 <!-- SECCIÓN: TESTIMONIOS DE USUARIOS -->
 <section class="section" id="testimonios" style="max-width: 900px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 15px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); font-family: 'Segoe UI', sans-serif;">
   <h2 class="titulo-seccion" style="text-align: center; font-size: 1.8em; color: #6a1b9a;">Testimonios de usuarios</h2>
