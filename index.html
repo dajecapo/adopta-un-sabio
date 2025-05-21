@@ -726,7 +726,7 @@ window.addEventListener("DOMContentLoaded", () => {
   <h2 style="text-align: center; font-size: 2em; margin-bottom: 1em; color: #4a148c;">Preguntas Frecuentes</h2>
 
   <div style="text-align: center; margin-bottom: 1.5em;">
-    <button id="toggleFaq" onclick="toggleFaq()" style="font-size: 1.2rem; padding: 12px 20px; border: none; background-color: #6a1b9a; color: white; border-radius: 12px; cursor: pointer; transition: background-color 0.3s; width: 100%;">
+    <button id="toggleFaq" onclick="toggleFaq()" class="boton-estandar">
       Ver respuestas
     </button>
   </div>
@@ -756,6 +756,23 @@ window.addEventListener("DOMContentLoaded", () => {
 </section>
 
 <style>
+  .boton-estandar {
+    width: 100%;
+    font-size: 1.2rem;
+    padding: 12px 20px;
+    background-color: #6a1b9a;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  .boton-estandar:hover {
+    background-color: #4a148c;
+  }
+
   .faq-item {
     background-color: #fff;
     margin-bottom: 10px;
@@ -791,14 +808,15 @@ window.addEventListener("DOMContentLoaded", () => {
       margin: 2rem 1rem;
       padding: 1.5rem;
     }
+
     .question {
       font-size: 1em;
     }
-    #toggleFaq {
-      width: 100%;
-      font-size: 1.2rem !important;
-      padding: 12px 20px !important;
-      border-radius: 12px !important;
+
+    .boton-estandar {
+      font-size: 1.2rem;
+      padding: 12px 20px;
+      border-radius: 12px;
     }
   }
 </style>
