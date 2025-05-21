@@ -971,7 +971,7 @@ function toggleAudio() {
 </script>
 
 <!-- SECCIÓN: CONTÁCTANOS -->
-<section id="contacto" style="padding: 60px 0 40px 0; background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif;">
+<section id="contacto" style="padding: 40px 0 40px 0; background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif;">
   <div class="section">
     <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
     <div style="text-align:center; margin-bottom: 20px;">
@@ -1007,6 +1007,7 @@ function toggleAudio() {
           <span id="captchaCheckContacto" style="color: green; font-size: 20px; display: none;">✔</span>
         </div>
 
+        <!-- BOTÓN ENVIAR CENTRADO -->
         <div style="text-align: center; margin-top: 10px;">
           <button type="submit" class="boton-estandar">Enviar mensaje</button>
         </div>
@@ -1015,11 +1016,12 @@ function toggleAudio() {
   </div>
 </section>
 
+<!-- ESTILOS VISUALES -->
 <style>
   .section {
     width: 100%;
     max-width: 900px;
-    margin: 0 auto;
+    margin: 2rem auto;
     padding: 2rem;
     background: white;
     border-radius: 15px;
@@ -1045,21 +1047,24 @@ function toggleAudio() {
   }
 
   @media screen and (max-width: 600px) {
-    #contacto {
-      padding: 0 0 40px 0 !important;
-    }
     .section {
+      width: 100%;
       margin: 0;
       padding: 1.5rem;
-      width: 100%;
       border-radius: 0;
     }
+
+    #contacto {
+      padding-top: 0;
+    }
+
     .boton-estandar {
       max-width: 100%;
     }
   }
 </style>
 
+<!-- FUNCIONALIDAD -->
 <script>
   function toggleFormularioContacto() {
     const form = document.getElementById("formularioContactoContenedor");
@@ -1284,3 +1289,5 @@ function toggleAudio() {
 
 </body>
 </html>
+
+
