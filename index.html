@@ -34,52 +34,58 @@ body {
     display: none !important;
   }
 }
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #fff8f0;
-      color: #333;
-    }
 
-    .portada-header {
-      position: relative;
-      text-align: center;
-    }
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background-color: #fff8f0;
+  color: #333;
+}
 
-    .portada-header img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+.portada-header {
+  position: relative;
+  text-align: center;
+}
 
-    .portada-texto {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      color: white;
-      text-shadow: 2px 2px 5px black;
-    }
+.portada-header img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
 
-    .portada-texto h1 {
-      font-size: 3em;
-      margin: 0;
-    }
+.portada-texto {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-shadow: 2px 2px 5px black;
+}
 
-    .portada-texto h2 {
-      font-size: 2em;
-      margin-top: 0.5em;
-    }
+.portada-texto h1 {
+  font-size: 3em;
+  margin: 0;
+}
 
-    @media (max-width: 600px) {
-      .portada-texto h1 {
-        font-size: 2em;
-      }
+.portada-texto h2 {
+  font-size: 2em;
+  margin-top: 0.5em;
+}
 
-      .portada-texto h2 {
-        font-size: 1.5em;
-      }
-    }
+/* === AJUSTE DE POSICIÓN PARA CELULAR === */
+@media (max-width: 600px) {
+  .portada-texto {
+    top: 70%;
+  }
+
+  .portada-texto h1 {
+    font-size: 2em;
+  }
+
+  .portada-texto h2 {
+    font-size: 1.5em;
+  }
+}
   </style>
 </head>
 <body>
@@ -91,9 +97,9 @@ body {
     <h1>Adopta un Sabio</h1>
     <h2>Escucha, aprende, comparte.</h2>
   </div>
-</header>
-<!-- SECCIÓN: ¿Qué es Adopta un Sabio? -->
+</header><!-- SECCIÓN: ¿Qué es Adopta un Sabio? -->
 <div class="section">
+
   <h2>¿Qué es <em>Adopta un Sabio</em>?</h2>
   <p>En un mundo que a veces corre demasiado rápido, <strong>Adopta un Sabio</strong> surge como un alto en el camino.</p>
   <p>Es un espacio digital donde la voz pausada, firme y sabia de quienes ya vivieron encuentra eco en las generaciones que hoy están construyendo su futuro.</p>
@@ -1228,3 +1234,4 @@ function toggleAudio() {
 
 </body>
 </html>
+
