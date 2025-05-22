@@ -5,12 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopta un Sabio</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: #f5f5f5;
       color: #333;
+      overflow-x: hidden;
+    }
+
+    img {
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
 
     .section {
@@ -132,6 +143,8 @@
 
     @media screen and (max-width: 768px) {
       .section,
+      .contacto-section,
+      .musica-section,
       form,
       .card,
       .testimonio-slide,
@@ -156,7 +169,7 @@
       }
 
       .portada-texto {
-        top: 75%;
+        top: 60%;
       }
 
       .portada-texto h1 {
