@@ -4,44 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopta un Sabio</title>
-  <style>
-/* === COLOR DE FONDO UNIFICADO === */
+<style>
+/* === COLOR DE FONDO GENERAL === */
 body {
-  background-color: #f5f5f5 !important;
   margin: 0;
   padding: 0;
-}
-
-/* === ESTILOS RESPONSIVOS PARA CELULAR === */
-@media screen and (max-width: 768px) {
-  .section, form, .card, .testimonio-slide, .carrusel-contenedor {
-    width: 95% !important;
-    margin: auto !important;
-    padding: 1em !important;
-  }
-
-  input, textarea, button {
-    font-size: 1em !important;
-    width: 100% !important;
-  }
-
-  h2, h3, h4 {
-    font-size: 1.4em !important;
-    text-align: center !important;
-  }
-
-  .carrusel-btn {
-    display: none !important;
-  }
-}
-
-body {
-  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #fff8f0;
+  background-color: #f5f5f5; /* Fondo gris claro para contraste con secciones blancas */
   color: #333;
 }
 
+/* === ESTILO GENERAL PARA TODAS LAS SECCIONES === */
+.section {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Unificación visual para escritorio */
+@media (min-width: 769px) {
+  .section:not(:last-child) {
+    margin-bottom: 3rem;
+  }
+}
+/* === PORTADA === */
 .portada-header {
   position: relative;
   text-align: center;
@@ -72,8 +62,36 @@ body {
   margin-top: 0.5em;
 }
 
-/* === AJUSTE DE POSICIÓN PARA CELULAR === */
-@media (max-width: 600px) {
+/* === RESPONSIVO GENERAL === */
+@media screen and (max-width: 768px) {
+  .section,
+  form,
+  .card,
+  .testimonio-slide,
+  .carrusel-contenedor {
+    width: 95%;
+    margin: auto;
+    padding: 1em;
+  }
+
+  input,
+  textarea,
+  button {
+    font-size: 1em;
+    width: 100%;
+  }
+
+  h2,
+  h3,
+  h4 {
+    font-size: 1.4em;
+    text-align: center;
+  }
+
+  .carrusel-btn {
+    display: none;
+  }
+
   .portada-texto {
     top: 70%;
   }
@@ -86,7 +104,7 @@ body {
     font-size: 1.5em;
   }
 }
-  </style>
+</style>
 </head>
 <body>
 
@@ -111,8 +129,10 @@ body {
 
 <!-- SECCIÓN: ¿Cómo funciona? -->
 <div class="section">
-  <h2>¿Cómo funciona?</h2>
-  <button class="button-toggle" onclick="toggleSection('funciona')">Ver explicación</button>
+  <div style="text-align: center;">
+    <h2>¿Cómo funciona?</h2>
+    <button class="button-toggle" onclick="toggleSection('funciona')">Ver explicación</button>
+  </div>
   <div id="funciona" class="collapsible">
     <ul>
       <li><strong>1.</strong> Recorre nuestra galería de sabios disponibles.</li>
@@ -126,8 +146,10 @@ body {
 
 <!-- SECCIÓN: Reglas de participación -->
 <div class="section">
-  <h2>Reglas de participación</h2>
-  <button class="button-toggle" onclick="toggleSection('reglas')">Ver reglas</button>
+  <div style="text-align: center;">
+    <h2>Reglas de participación</h2>
+    <button class="button-toggle" onclick="toggleSection('reglas')">Ver reglas</button>
+  </div>
   <div id="reglas" class="collapsible">
     <ul>
       <li>El respeto mutuo es fundamental: no se tolerarán ofensas, burlas o lenguaje inapropiado.</li>
@@ -139,6 +161,61 @@ body {
   </div>
 </div>
 
+<!-- ESTILOS NECESARIOS -->
+<style>
+  .section {
+    max-width: 900px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    font-family: 'Segoe UI', sans-serif;
+  }
+
+  .section h2 {
+    color: #6a1b9a;
+    font-size: 1.8rem;
+  }
+
+  .button-toggle {
+    background-color: #6a1b9a;
+    color: white;
+    padding: 0.5rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    margin-top: 1rem;
+  }
+
+  .collapsible {
+    display: none;
+    margin-top: 1rem;
+    animation: fadeIn 0.3s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  ul {
+    padding-left: 1.5rem;
+  }
+
+  ul li {
+    margin-bottom: 0.5rem;
+  }
+</style>
+
+<!-- SCRIPT para funcionamiento de botones -->
+<script>
+  function toggleSection(id) {
+    const element = document.getElementById(id);
+    element.style.display = (element.style.display === "none" || element.style.display === "") ? "block" : "none";
+  }
+</script>
 <!-- ESTILOS COMPLEMENTARIOS -->
 <style>
   .section {
@@ -971,7 +1048,7 @@ function toggleAudio() {
 </script>
 
 <!-- SECCIÓN: CONTÁCTANOS -->
-<section id="contacto" style="padding: 40px 0 40px 0; background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif;">
+<section id="contacto" style="padding: 60px 0 40px 0; background-color: #f5f5f5; font-family: 'Segoe UI', sans-serif;">
   <div class="section">
     <h2 style="text-align:center; font-size: 28px; color: #333;">Contáctanos</h2>
     <div style="text-align:center; margin-bottom: 20px;">
@@ -1007,7 +1084,6 @@ function toggleAudio() {
           <span id="captchaCheckContacto" style="color: green; font-size: 20px; display: none;">✔</span>
         </div>
 
-        <!-- BOTÓN ENVIAR CENTRADO -->
         <div style="text-align: center; margin-top: 10px;">
           <button type="submit" class="boton-estandar">Enviar mensaje</button>
         </div>
@@ -1016,12 +1092,11 @@ function toggleAudio() {
   </div>
 </section>
 
-<!-- ESTILOS VISUALES -->
 <style>
   .section {
     width: 100%;
     max-width: 900px;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 2rem;
     background: white;
     border-radius: 15px;
@@ -1047,24 +1122,21 @@ function toggleAudio() {
   }
 
   @media screen and (max-width: 600px) {
+    #contacto {
+      padding: 0 0 40px 0 !important;
+    }
     .section {
-      width: 100%;
       margin: 0;
       padding: 1.5rem;
+      width: 100%;
       border-radius: 0;
     }
-
-    #contacto {
-      padding-top: 0;
-    }
-
     .boton-estandar {
       max-width: 100%;
     }
   }
 </style>
 
-<!-- FUNCIONALIDAD -->
 <script>
   function toggleFormularioContacto() {
     const form = document.getElementById("formularioContactoContenedor");
@@ -1289,5 +1361,3 @@ function toggleAudio() {
 
 </body>
 </html>
-
-
