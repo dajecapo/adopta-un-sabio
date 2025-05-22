@@ -4,26 +4,44 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopta un Sabio</title>
-<style>
-/* === ESTILO GENERAL === */
+  <style>
+/* === COLOR DE FONDO UNIFICADO === */
 body {
+  background-color: #f5f5f5 !important;
   margin: 0;
   padding: 0;
+}
+
+/* === ESTILOS RESPONSIVOS PARA CELULAR === */
+@media screen and (max-width: 768px) {
+  .section, form, .card, .testimonio-slide, .carrusel-contenedor {
+    width: 95% !important;
+    margin: auto !important;
+    padding: 1em !important;
+  }
+
+  input, textarea, button {
+    font-size: 1em !important;
+    width: 100% !important;
+  }
+
+  h2, h3, h4 {
+    font-size: 1.4em !important;
+    text-align: center !important;
+  }
+
+  .carrusel-btn {
+    display: none !important;
+  }
+}
+
+body {
+  margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background-color: #f5f5f5;
+  background-color: #fff8f0;
   color: #333;
 }
 
-.section {
-  max-width: 900px;
-  margin: 2rem auto;
-  padding: 2rem;
-  background: white;
-  border-radius: 15px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-/* PORTADA */
 .portada-header {
   position: relative;
   text-align: center;
@@ -42,8 +60,6 @@ body {
   transform: translate(-50%, -50%);
   color: white;
   text-shadow: 2px 2px 5px black;
-  text-align: center;
-  padding: 0 1rem;
 }
 
 .portada-texto h1 {
@@ -56,65 +72,21 @@ body {
   margin-top: 0.5em;
 }
 
-/* PIE DE PÁGINA */
-footer {
-  text-align: center;
-  padding: 2rem 1rem;
-  font-size: 1em;
-  line-height: 1.6em;
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-/* RESPONSIVO */
-@media screen and (max-width: 768px) {
-  .section,
-  form,
-  .card,
-  .testimonio-slide,
-  .carrusel-contenedor {
-    width: 95%;
-    margin: auto;
-    padding: 1em;
-  }
-
-  input,
-  textarea,
-  button {
-    font-size: 1em;
-    width: 100%;
-  }
-
-  h2,
-  h3,
-  h4 {
-    font-size: 1.4em;
-    text-align: center;
-  }
-
-  .carrusel-btn {
-    display: none;
-  }
-
+/* === AJUSTE DE POSICIÓN PARA CELULAR === */
+@media (max-width: 600px) {
   .portada-texto {
-    top: 72%;
+    top: 70%;
   }
 
   .portada-texto h1 {
-    font-size: 1.8em;
+    font-size: 2em;
   }
 
   .portada-texto h2 {
-    font-size: 1.3em;
-  }
-
-  footer {
-    padding: 1.5rem 1rem;
-    font-size: 0.9em;
-    text-align: center;
+    font-size: 1.5em;
   }
 }
-</style>
+  </style>
 </head>
 <body>
 
