@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Adopta un Sabio</title>
 <style>
-/* === COLOR DE FONDO GENERAL === */
+/* === ESTILO GENERAL === */
 body {
   margin: 0;
   padding: 0;
@@ -14,7 +14,6 @@ body {
   color: #333;
 }
 
-/* === ESTILO GENERAL PARA TODAS LAS SECCIONES === */
 .section {
   max-width: 900px;
   margin: 2rem auto;
@@ -22,17 +21,9 @@ body {
   background: white;
   border-radius: 15px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  font-family: 'Segoe UI', sans-serif;
 }
 
-/* Unificación visual para escritorio */
-@media (min-width: 769px) {
-  .section:not(:last-child) {
-    margin-bottom: 3rem;
-  }
-}
-
-/* === PORTADA === */
+/* PORTADA */
 .portada-header {
   position: relative;
   text-align: center;
@@ -52,6 +43,7 @@ body {
   color: white;
   text-shadow: 2px 2px 5px black;
   text-align: center;
+  padding: 0 1rem;
 }
 
 .portada-texto h1 {
@@ -64,7 +56,17 @@ body {
   margin-top: 0.5em;
 }
 
-/* === RESPONSIVO GENERAL Y PORTADA / FOOTER === */
+/* PIE DE PÁGINA */
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  font-size: 1em;
+  line-height: 1.6em;
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* RESPONSIVO */
 @media screen and (max-width: 768px) {
   .section,
   form,
@@ -107,15 +109,9 @@ body {
   }
 
   footer {
-    padding: 2rem 1rem;
-    text-align: center;
+    padding: 1.5rem 1rem;
     font-size: 0.9em;
-    line-height: 1.5em;
-    background-color: #f5f5f5;
-  }
-
-  .portada-header {
-    padding-bottom: 2rem;
+    text-align: center;
   }
 }
 </style>
@@ -1375,5 +1371,3 @@ function toggleAudio() {
 
 </body>
 </html>
-
-
